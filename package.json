@@ -1,0 +1,32 @@
+{
+  "name": "restaurant-booking-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "prettier": "@vercel/style-guide/prettier",
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vercel/style-guide": "^5.2.0",
+    "dotenv": "^16.3.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "0.5.4",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
