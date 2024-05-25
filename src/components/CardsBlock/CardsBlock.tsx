@@ -11,7 +11,7 @@ export default function CardsBlock({ titleOfBlock, restaurants }: Props) {
   return (
     <div className="bg-white pb-[60px] pt-[60px]">
       <H2>{titleOfBlock}</H2>
-      <div className="mx-auto mt-16 flex w-10/12 flex-wrap gap-8">
+      <div className="mx-auto mt-16 flex w-fit flex-wrap gap-8  px-[60px]">
         {...restaurants.map((restaurant, i) => (
           <RestaurantCard key={i} restaurant={restaurant} />
         ))}
