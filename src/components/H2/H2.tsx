@@ -1,4 +1,4 @@
-import { atma } from '@/app/_constants/fonts';
+import { atma } from '@/constants/fonts';
 
 export default function H2({ children }: { children: React.ReactNode }) {
   return (
