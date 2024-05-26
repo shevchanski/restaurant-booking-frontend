@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 
-import Header from '@/components/Header/Header';
 import { jakarta } from '@/constants/fonts';
 import './globals.css';
 
@@ -17,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${jakarta.className} text-black`}>
-        <Header />
+        {/* <Header /> */}
         {children}
       </body>
     </html>

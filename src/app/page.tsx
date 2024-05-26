@@ -1,8 +1,12 @@
+import CardsBlock from '@/components/CardsBlock/CardsBlock';
+import Header from '@/components/Header/Header';
 import SearchBar from '@/components/SearchBar/SearchBar';
+import { restaurants } from '@/constants/place-holder';
 
 export default function Home() {
   return (
     <>
+      <Header />
       <div className="absolute top-0 z-[-99] h-[850px] w-full bg-[url('/img/mainPage-bg.jpg')] bg-cover bg-center bg-no-repeat"></div>
       <div>
         <div className="flex flex-col items-center pb-[316px] pt-[180px]">
@@ -12,6 +16,20 @@ export default function Home() {
           <SearchBar className="mt-14" />
         </div>
       </div>
+      <CardsBlock
+        titleOfBlock="Popular Restaurants"
+        restaurants={restaurants.map(
+          (res, i) => (res = { ...res, _res_id: i }),
+        )}
+      />
+      <CardsBlock
+        titleOfBlock="Personal Recomendations"
+        restaurants={restaurants}
+      />
+      <CardsBlock
+        titleOfBlock="Special offers & Discounts"
+        restaurants={restaurants}
+      />
     </>
   );
 }
