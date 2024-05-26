@@ -1,4 +1,5 @@
 import CardsBlock from '@/components/CardsBlock/CardsBlock';
+import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import { restaurants } from '@/constants/place-holder';
@@ -30,6 +31,7 @@ export default function Home() {
         titleOfBlock="Special offers & Discounts"
         restaurants={restaurants}
       />
+      <Footer />
     </>
   );
 }
