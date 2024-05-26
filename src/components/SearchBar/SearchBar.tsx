@@ -1,5 +1,5 @@
-import { getButtonClassName } from '@/utils/getBtnClassName';
 import Image from 'next/image';
+import { getButtonClassName } from '../helpers/getBtnClassName';
 
 interface SearchBarProps {
   className?: string;

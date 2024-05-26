@@ -1,6 +1,6 @@
-import { getButtonClassName } from '@/utils/getBtnClassName';
 import clsx from 'clsx';
 import Image from 'next/image';
+import { getButtonClassName } from '../helpers/getBtnClassName';
 
 interface ButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   children: string;
