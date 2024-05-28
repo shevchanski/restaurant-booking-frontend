@@ -11,12 +11,16 @@ import { getButtonClassName } from '../helpers/getBtnClassName';
 
 interface SearchBarProps {
   className?: string;
+  searchedValue?: string;
 }
 
-export default function SearchBar({ className = '' }: SearchBarProps) {
+export default function SearchBar({
+  className = '',
+  searchedValue = '',
+}: SearchBarProps) {
   const { register, handleSubmit } = useForm<SearchData>({
     values: {
-      search_param: '',
+      search_param: searchedValue,
     },
     resolver: zodResolver(SearchSchema),
   });
