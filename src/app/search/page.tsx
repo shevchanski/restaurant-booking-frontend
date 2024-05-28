@@ -27,7 +27,7 @@ export default async function SearchResultPage({ searchParams }: Props) {
   }
 
   return (
-    <div className="max-w-screen flex min-h-screen flex-col">
+    <>
       <div className=" box-border w-full border border-transparent bg-[url('/img/mainPage-bg.jpg')] bg-cover">
         <Header />
         <Wrapper>
@@ -51,7 +51,7 @@ export default async function SearchResultPage({ searchParams }: Props) {
       </main>
 
       <Footer />
-    </div>
+    </>
   );
 }
 
