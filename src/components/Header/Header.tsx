@@ -1,12 +1,15 @@
 import NavBar from '../NavBar/NavBar';
+import Wrapper from '../Wrapper/Wrapper';
 
 export default function Header() {
   return (
-    <header
-      className="flex
+    <Wrapper>
+      <header
+        className="flex
 	  justify-center pt-5"
-    >
-      <NavBar />
-    </header>
+      >
+        <NavBar />
+      </header>
+    </Wrapper>
   );
 }
