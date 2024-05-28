@@ -20,7 +20,7 @@ export default function Home() {
       <CardsBlock
         titleOfBlock="Popular Restaurants"
         restaurants={restaurants.map(
-          (res, i) => (res = { ...res, _res_id: i }),
+          (res, i) => (res = { ...res, _id: i.toString() }),
         )}
       />
       <CardsBlock

@@ -1,4 +1,12 @@
+'use client';
+
+import { searchRestaurants } from '@/actions/searchRestaurants';
+import SearchSchema from '@/schemas/search.schema';
+import { SearchData } from '@/types/search.type';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
+import { useFormState } from 'react-dom';
+import { useForm } from 'react-hook-form';
 import { getButtonClassName } from '../helpers/getBtnClassName';
 
 interface SearchBarProps {
@@ -6,9 +14,17 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ className = '' }: SearchBarProps) {
-  const findRestaurants = async (data: FormData) => {
-    'use server';
-    console.log(data);
+  const { register, handleSubmit } = useForm<SearchData>({
+    values: {
+      search_param: '',
+    },
+    resolver: zodResolver(SearchSchema),
+  });
+
+  const [errorMessage, dispatch] = useFormState(searchRestaurants, undefined);
+
+  const findRestaurants = (data: SearchData) => {
+    dispatch(data);
   };
 
   return (
@@ -16,7 +32,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
       className={`${className} h-[86px] w-7/12 rounded-[80px] bg-white px-[30px]`}
     >
       <form
-        action={findRestaurants}
+        onSubmit={handleSubmit(findRestaurants)}
         className="flex h-full items-center justify-between gap-2"
       >
         <label className="relative flex-grow">
@@ -31,12 +47,14 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
           <input
             className="h-[80px] w-full border-0 pl-[50px] text-black placeholder:text-[16px] focus:underline focus:ring-0"
             type="text"
-            name="search_param"
+            {...register('search_param')}
             placeholder="Search by Location, Restaurant or Cuisine..."
           />
         </label>
 
-        <button className={getButtonClassName()}>Search</button>
+        <button className={getButtonClassName()} type="submit">
+          Search
+        </button>
       </form>
     </div>
   );

@@ -1,8 +1,22 @@
-export interface IRestaurant {
-  imageUrl: string;
-  title: string;
-  rating: number;
-  cuisine: string;
-  description: string;
-  _res_id: number;
+interface IAddress {
+  city: string;
+  country: string;
+  post_code: string;
+  street_address: string;
+  region?: string;
 }
+
+export interface IRestaurant {
+  _id: string;
+  title: string;
+  description: string;
+  website?: string;
+  // imageUrl: string;
+  rating: number;
+  cuisine: string[];
+  phoneNumber: string;
+  address: IAddress;
+  createdAt: string;
+}
+
+export type RestaurantKeys = keyof IRestaurant;
