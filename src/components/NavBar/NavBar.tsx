@@ -1,4 +1,5 @@
 import LinkButton from '@/components/LinkButton/LinkButton';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import Image from 'next/image';
 import { buttonsConfig } from './config';
 
@@ -16,18 +17,23 @@ export default function NavBar() {
       </a>
 
       <div className="flex gap-5">
-        {buttonsConfig.map(({ title, href, iconURI, isInvertColor }) => {
-          return (
-            <LinkButton
-              key={href}
-              href={href}
-              iconSrc={iconURI}
-              invert={isInvertColor}
-            >
-              {title}
-            </LinkButton>
-          );
-        })}
+        <SignedOut>
+          {buttonsConfig.map(({ title, href, iconURI, isInvertColor }) => {
+            return (
+              <LinkButton
+                key={href}
+                href={href}
+                iconSrc={iconURI}
+                invert={isInvertColor}
+              >
+                {title}
+              </LinkButton>
+            );
+          })}
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </div>
     </nav>
   );

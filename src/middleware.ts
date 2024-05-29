@@ -1,8 +1,3 @@
-import NextAuth from 'next-auth';
-import { authConfig } from './auth/authConfig';
+import { clerkMiddleware } from '@clerk/nextjs/server';
 
-export default NextAuth(authConfig).auth;
-
-export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|img|favicon.ico).*)'],
-};
+export default clerkMiddleware;
