@@ -5,7 +5,7 @@ import { buttonsConfig } from './config';
 
 export default function NavBar() {
   return (
-    <nav className="flex w-9/12 items-center justify-between rounded-[45px] bg-zinc-100/60 py-2 pl-2 pr-4">
+    <nav className="flex w-9/12 items-center justify-between rounded-[45px] bg-zinc-100/60 py-2 pl-2 pr-4 shadow-md">
       <a href="/" className="duration-300 hover:translate-x-1 hover:scale-105">
         <Image
           src="/img/svg/logo-colorful.svg"
@@ -32,7 +32,14 @@ export default function NavBar() {
           })}
         </SignedOut>
         <SignedIn>
-          <UserButton />
+          <UserButton
+            appearance={{
+              elements: {
+                userButtonAvatarBox:
+                  'h-12 w-12 border border-red-500 box-sizing',
+              },
+            }}
+          />
         </SignedIn>
       </div>
     </nav>
