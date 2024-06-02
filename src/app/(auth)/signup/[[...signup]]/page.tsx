@@ -1,9 +1,5 @@
-import { ClerkProvider, SignUp } from '@clerk/nextjs';
+import { SignUp } from '@clerk/nextjs';
 
 export default function LoginPage() {
-  return (
-    <ClerkProvider>
-      <SignUp />
-    </ClerkProvider>
-  );
+  return <SignUp />;
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { jakarta } from '@/constants/fonts';
+import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -15,13 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${jakarta.className} flex min-h-screen flex-col bg-white text-black`}
-      >
-        {/* <Header /> */}
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${jakarta.className} flex min-h-screen flex-col bg-white text-black`}
+        >
+          {/* <Header /> */}
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
