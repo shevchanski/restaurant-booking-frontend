@@ -5,6 +5,7 @@ import Footer from '@/components/Footer/Footer';
 import H2 from '@/components/H2/H2';
 import Header from '@/components/Header/Header';
 import SearchBar from '@/components/SearchBar/SearchBar';
+import SortSelector from '@/components/SortSelector/SortSelector';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import { SearchParams } from '@/types/search.type';
 import findRestaurants from '@/utils/findRestaurants';
@@ -37,15 +38,18 @@ export default async function SearchResultPage({ searchParams }: Props) {
         </Wrapper>
       </div>
 
-      <main className=" w-full flex-1 bg-white pb-10 pt-8">
+      <main className=" w-full flex-1 bg-white px-10 pb-10 pt-8 xl:px-0">
         <Wrapper>
           <H2>Searching Results</H2>
-          <div className="mt-10 flex justify-center">
-            {response && response.restaurants.length ? (
-              <CardsGrid restaurants={response.restaurants} />
-            ) : (
-              <NoResultMessage />
-            )}
+          <div className="grid- mt-10 grid grid-cols-[200px_1fr] gap-y-2">
+            <SortSelector className="col-start-2 justify-self-end" />
+            <div className="col-start-2">
+              {response && response.restaurants.length ? (
+                <CardsGrid restaurants={response.restaurants} />
+              ) : (
+                <NoResultMessage />
+              )}
+            </div>
           </div>
         </Wrapper>
       </main>

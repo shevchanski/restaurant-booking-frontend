@@ -8,7 +8,7 @@ enum SortOptions {
 const DEFAULT_PAGE = 1;
 const DEFAULT_PER_PAGE = 20;
 const DEFAULT_SORT_BY: RestaurantKeys = 'createdAt';
-const DEFAULT_SORT_OPTION: SortOptions = SortOptions.ASC;
+const DEFAULT_SORT_OPTION: SortOptions = SortOptions.DESC;
 
 export {
   DEFAULT_PAGE,
