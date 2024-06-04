@@ -2,6 +2,7 @@
 
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
+import MainSection from '@/components/MainSection/MainSection';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import SearchingResult from '@/components/SearchingResult/SearchingResult';
 import Wrapper from '@/components/Wrapper/Wrapper';
@@ -24,9 +25,11 @@ export default async function SearchResultPage({ searchParams }: Props) {
         </Wrapper>
       </div>
 
-      <Suspense fallback={<h2>Loading...</h2>}>
-        <SearchingResult searchParams={searchParams} />
-      </Suspense>
+      <MainSection>
+        <Suspense fallback={<h2>Loading...</h2>}>
+          <SearchingResult searchParams={searchParams} />
+        </Suspense>
+      </MainSection>
 
       <Footer />
     </>

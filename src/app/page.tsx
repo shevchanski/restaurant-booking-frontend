@@ -1,6 +1,7 @@
 import CardsBlock from '@/components/CardsBlock/CardsBlock';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
+import MainSection from '@/components/MainSection/MainSection';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import { restaurants } from '@/constants/place-holder';
@@ -19,20 +20,22 @@ export default function Home() {
         </div>
       </Wrapper>
 
-      <CardsBlock
-        titleOfBlock="Popular Restaurants"
-        restaurants={restaurants.map(
-          (res, i) => (res = { ...res, _id: i.toString() }),
-        )}
-      />
-      <CardsBlock
-        titleOfBlock="Personal Recomendations"
-        restaurants={restaurants}
-      />
-      <CardsBlock
-        titleOfBlock="Special offers & Discounts"
-        restaurants={restaurants}
-      />
+      <MainSection>
+        <CardsBlock
+          titleOfBlock="Popular Restaurants"
+          restaurants={restaurants.map(
+            (res, i) => (res = { ...res, _id: i.toString() }),
+          )}
+        />
+        <CardsBlock
+          titleOfBlock="Personal Recomendations"
+          restaurants={restaurants}
+        />
+        <CardsBlock
+          titleOfBlock="Special offers & Discounts"
+          restaurants={restaurants}
+        />
+      </MainSection>
       <Footer />
     </>
   );
