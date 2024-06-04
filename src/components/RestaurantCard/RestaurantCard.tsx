@@ -1,17 +1,25 @@
 import { IRestaurant } from '@/types/restaurant.type';
 import Image from 'next/image';
 import React from 'react';
+import FavoriteButton from '../FavouriteButton/FavouriteButton';
 
 type Props = {
   restaurant: IRestaurant;
+  isFavorite: boolean;
 };
 
-export default function RestaurantCard({ restaurant }: Props) {
+export default function RestaurantCard({
+  restaurant,
+  isFavorite = false,
+}: Props) {
   const { title, rating, cuisine, description, _id } = restaurant;
 
   return (
-    <div className="h-[345px] w-[250px]  overflow-hidden rounded-xl bg-white text-black shadow-lg duration-[400ms] hover:scale-105">
+    <div className="relative h-[345px] w-[250px]  overflow-hidden rounded-xl border border-transparent bg-white text-black shadow-lg duration-150 hover:border-red-500">
       <a href={`/restaurants/${_id}`} className="flex h-full flex-col">
+        <div className="absolute right-3 top-3">
+          <FavoriteButton rest_id={_id} isFavorite={isFavorite} />
+        </div>
         <Image
           className="max-h-[170px] w-full max-w-[250px] object-cover"
           src={'/img/example-resPhoto.jpg'}
