@@ -2,6 +2,7 @@
 
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
+import RestPhotoCarousel from '@/components/RestPhotoCarousel/RestPhotoCarousel';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import { atma } from '@/constants/fonts';
 import fetchRestaurantById from '@/utils/fetchRestaurantById';
@@ -31,10 +32,14 @@ export default async function RestaurantPage({
     <>
       <Header />
 
-      <main className=" w-full flex-1 pt-20 text-black">
+      <main className=" w-full flex-1 py-20 text-black">
         <Wrapper>
           {restaurant ? (
-            <div className="grid h-full w-full grid-cols-8 grid-rows-[min(350px)_auto] gap-3">
+            <div className="grid-rows-[minmax(350px, 1fr)_1fr]  grid h-full w-full grid-cols-8 gap-3 gap-y-5">
+              <RestPhotoCarousel
+                className="col-span-6 col-start-2"
+                restId={restaurantId}
+              />
               <div className="col-span-4 col-start-2 min-h-[350px] rounded-l-md bg-gradient-to-r from-red-500 p-[1px] pr-0">
                 <div className="h-full rounded-l-md bg-white p-5  ">
                   <div className="flex justify-between">
