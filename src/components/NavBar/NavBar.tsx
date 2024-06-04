@@ -1,5 +1,6 @@
 import LinkButton from '@/components/LinkButton/LinkButton';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { HeartIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { buttonsConfig } from './config';
 
@@ -16,7 +17,7 @@ export default function NavBar() {
         ></Image>
       </a>
 
-      <div className="flex gap-5">
+      <div className="flex items-center gap-5">
         <SignedOut>
           {buttonsConfig.map(({ title, href, iconURI, isInvertColor }) => {
             return (
@@ -32,6 +33,9 @@ export default function NavBar() {
           })}
         </SignedOut>
         <SignedIn>
+          <a href="/favorites" className="duration-200 hover:text-white">
+            <HeartIcon className="h-7 w-7" />
+          </a>
           <UserButton
             appearance={{
               elements: {
