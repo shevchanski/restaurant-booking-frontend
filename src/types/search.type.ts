@@ -9,10 +9,11 @@ export interface SearchParams {
   searchTerm?: string;
   page: number;
   perPage: number;
-  sortBy: RestaurantKeys;
-  sortOption: SortOptions;
+  sortBy: RestaurantKeys | string;
+  sortOption: SortOptions | string;
 }
 
 export interface SearchResponse extends Omit<SearchParams, 'searchTerm'> {
+  totalAmount: number;
   restaurants: IRestaurant[];
 }

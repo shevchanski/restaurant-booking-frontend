@@ -4,9 +4,10 @@ import {
   DEFAULT_SORT_BY,
   SortOptions,
 } from '@/constants/pagination';
+import { SearchParams } from '@/types/search.type';
 import { useSearchParams } from 'next/navigation';
 
-export const useRestSearchParams = () => {
+export const useRestSearchParams = (): SearchParams => {
   const searchParams = useSearchParams();
 
   const currentPage = searchParams.get('page');
