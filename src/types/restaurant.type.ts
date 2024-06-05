@@ -1,3 +1,6 @@
+import { RestaurantFormSchema } from '@/schemas/rest-registation.schema';
+import { z } from 'zod';
+
 interface IAddress {
   city: string;
   country: string;
@@ -18,5 +21,7 @@ export interface IRestaurant {
   address: IAddress;
   createdAt: string;
 }
+
+export type RestaurantSchema = z.infer<typeof RestaurantFormSchema>;
 
 export type RestaurantKeys = keyof IRestaurant;
