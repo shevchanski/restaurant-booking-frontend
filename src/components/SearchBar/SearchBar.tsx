@@ -1,11 +1,12 @@
 'use client';
 
-import { searchRestaurants } from '@/actions/searchRestaurants';
+import { useRestSearchParams } from '@/hooks/useRestSearchParams';
 import SearchSchema from '@/schemas/search.schema';
 import { SearchData } from '@/types/search.type';
+import { generateSearchParams } from '@/utils/generateSearchParams';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
-import { useFormState } from 'react-dom';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { getButtonClassName } from '../helpers/getBtnClassName';
 
@@ -14,21 +15,25 @@ interface SearchBarProps {
   searchedValue?: string;
 }
 
-export default function SearchBar({
-  className = '',
-  searchedValue = '',
-}: SearchBarProps) {
+export default function SearchBar({ className = '' }: SearchBarProps) {
+  const searchParams = useRestSearchParams();
+  const router = useRouter();
+
   const { register, handleSubmit } = useForm<SearchData>({
-    values: {
-      search_param: searchedValue,
+    defaultValues: {
+      search_param: searchParams.searchTerm,
     },
     resolver: zodResolver(SearchSchema),
   });
 
-  const [errorMessage, dispatch] = useFormState(searchRestaurants, undefined);
+  const handleSearch = (data: SearchData) => {
+    const params = generateSearchParams({
+      ...searchParams,
+      page: 1,
+      searchTerm: data.search_param,
+    });
 
-  const findRestaurants = (data: SearchData) => {
-    dispatch(data);
+    router.replace(`/search${params}`);
   };
 
   return (
@@ -36,7 +41,7 @@ export default function SearchBar({
       className={`${className} h-[86px] w-7/12 rounded-[80px] bg-white px-[30px]`}
     >
       <form
-        onSubmit={handleSubmit(findRestaurants)}
+        onSubmit={handleSubmit(handleSearch)}
         className="flex h-full items-center justify-between gap-2"
       >
         <label className="relative flex-grow">
