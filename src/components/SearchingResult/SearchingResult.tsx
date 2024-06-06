@@ -1,13 +1,11 @@
 import { SearchParams } from '@/types/search.type';
 import findRestaurants from '@/utils/findRestaurants';
-import getUserFavorites from '@/utils/getUserFavorites';
-import { auth } from '@clerk/nextjs/server';
 import { FaceSmileIcon } from '@heroicons/react/24/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import CardsGrid from '../CardsGrid/CardsGrid';
 import H2 from '../H2/H2';
+import PaginationBar from '../PaginationBar/PaginationBar';
 import SortSelector from '../SortSelector/SortSelector';
-import Wrapper from '../Wrapper/Wrapper';
 
 interface Props {
   searchParams: SearchParams;
@@ -16,39 +14,26 @@ interface Props {
 export default async function SearchingResult({ searchParams }: Props) {
   const response = await findRestaurants(searchParams);
 
-  const { userId } = auth();
-
-  let cuisines: string[] = [];
-
-  let favorites: string[] = [];
-
-  if (userId) {
-    favorites = (await getUserFavorites(userId)) ?? [];
-  }
-
-  //   if (response && response.restaurants.length) {
-  //     console.log(new Set(response.restaurants.flatMap((rest) => rest.cuisine)));
-  //   }
-
   return (
-    <main className=" w-full flex-1 bg-white px-10 pb-10 pt-8 xl:px-0">
-      <Wrapper>
-        <H2>Searching Results</H2>
-        <div className="grid- mt-10 grid grid-cols-[200px_1fr] gap-y-2">
-          <SortSelector className="col-start-2 justify-self-end" />
-          <div className="col-start-2">
-            {response && response.restaurants.length ? (
-              <CardsGrid
-                restaurants={response.restaurants}
-                favorites={favorites}
+    <div className="w-fit">
+      <H2>Searching Results</H2>
+      <div className="mt-5 grid grid-cols-[200px_1fr] gap-y-2">
+        <SortSelector className="col-start-2 justify-self-end" />
+        <div className="col-span-2 flex flex-col items-center">
+          {response && response.restaurants.length ? (
+            <>
+              <CardsGrid restaurants={response.restaurants} />
+              <PaginationBar
+                className="mt-10"
+                totalAmount={response.totalAmount}
               />
-            ) : (
-              <NoResultMessage />
-            )}
-          </div>
+            </>
+          ) : (
+            <NoResultMessage />
+          )}
         </div>
-      </Wrapper>
-    </main>
+      </div>
+    </div>
   );
 }
 
