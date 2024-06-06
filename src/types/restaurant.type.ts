@@ -22,6 +22,6 @@ export interface IRestaurant {
   createdAt: string;
 }
 
-export type RestaurantSchema = z.infer<typeof RestaurantFormSchema>;
+export type RestaurantFormData = z.infer<typeof RestaurantFormSchema>;
 
 export type RestaurantKeys = keyof IRestaurant;
