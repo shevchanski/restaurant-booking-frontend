@@ -26,7 +26,7 @@ export default async function SearchResultPage({ searchParams }: Props) {
         </Wrapper>
       </div>
 
-      <MainSection>
+      <MainSection innerBoxStyle="flex flex-col items-center">
         <Suspense fallback={<LoadingSpinner />}>
           <SearchingResult searchParams={searchParams} />
         </Suspense>
