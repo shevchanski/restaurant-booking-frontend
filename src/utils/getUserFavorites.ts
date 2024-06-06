@@ -4,7 +4,7 @@ import { API_URI } from '@/constants/config';
 import { IRestaurant } from '@/types/restaurant.type';
 import axios from 'axios';
 import path from 'path';
-import logFetchError from './logFetchError';
+import ErrorLogger from './ErrorLogger';
 
 async function getUserFavorites(userId: string): Promise<IRestaurant[]> {
   try {
@@ -14,7 +14,7 @@ async function getUserFavorites(userId: string): Promise<IRestaurant[]> {
       return response.data.restaurants ?? [];
     }
   } catch (error) {
-    logFetchError(error);
+    ErrorLogger(error);
   }
   return [];
 }

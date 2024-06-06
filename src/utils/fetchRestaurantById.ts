@@ -4,7 +4,7 @@ import { API_URI } from '@/constants/config';
 import { IRestaurant } from '@/types/restaurant.type';
 import axios from 'axios';
 import path from 'path';
-import logFetchError from './logFetchError';
+import ErrorLogger from './ErrorLogger';
 
 async function fetchRestaurantById(
   restaurantId: string,
@@ -18,7 +18,7 @@ async function fetchRestaurantById(
       return data.restaurant;
     }
   } catch (error) {
-    logFetchError;
+    ErrorLogger(error);
   }
 
   return null;

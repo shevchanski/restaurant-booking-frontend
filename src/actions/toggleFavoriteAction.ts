@@ -1,7 +1,7 @@
 'use server';
 
 import { API_URI } from '@/constants/config';
-import logFetchError from '@/utils/logFetchError';
+import ErrorLogger from '@/utils/ErrorLogger';
 import axios, { AxiosError } from 'axios';
 import path from 'path';
 
@@ -36,7 +36,7 @@ export async function toggleFavoriteAction({
         : 'Added to favorite list',
     };
   } catch (error) {
-    logFetchError(error);
+    ErrorLogger(error);
     return {
       success: false,
       message:
