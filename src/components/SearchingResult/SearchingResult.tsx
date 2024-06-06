@@ -1,5 +1,8 @@
 import { SearchParams } from '@/types/search.type';
 import findRestaurants from '@/utils/findRestaurants';
+import getRestaurantsIds from '@/utils/getRestaurantsIds';
+import getUserFavorites from '@/utils/getUserFavorites';
+import { auth } from '@clerk/nextjs/server';
 import { FaceSmileIcon } from '@heroicons/react/24/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import CardsGrid from '../CardsGrid/CardsGrid';
@@ -12,7 +15,12 @@ interface Props {
 }
 
 export default async function SearchingResult({ searchParams }: Props) {
-  const response = await findRestaurants(searchParams);
+  const { userId } = auth();
+
+  const [searchResponse, userFavorites] = await Promise.all([
+    findRestaurants(searchParams),
+    userId ? getRestaurantsIds(await getUserFavorites(userId)) : [],
+  ]);
 
   return (
     <div className="w-fit">
@@ -20,12 +28,15 @@ export default async function SearchingResult({ searchParams }: Props) {
       <div className="mt-5 grid grid-cols-[200px_1fr] gap-y-2">
         <SortSelector className="col-start-2 justify-self-end" />
         <div className="col-span-2 flex flex-col items-center">
-          {response && response.restaurants.length ? (
+          {searchResponse && searchResponse.restaurants.length ? (
             <>
-              <CardsGrid restaurants={response.restaurants} />
+              <CardsGrid
+                restaurants={searchResponse.restaurants}
+                favorites={userFavorites}
+              />
               <PaginationBar
                 className="mt-10"
-                totalAmount={response.totalAmount}
+                totalAmount={searchResponse.totalAmount}
               />
             </>
           ) : (
