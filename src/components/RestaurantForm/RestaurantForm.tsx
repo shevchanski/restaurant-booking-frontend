@@ -1,23 +1,31 @@
 'use client';
 
+import { registerRestaurant } from '@/actions/registerRestaurant';
 import { RestaurantFormSchema } from '@/schemas/rest-registation.schema';
-import { RestaurantSchema } from '@/types/restaurant.type';
-import { LinkIcon, PhoneIcon } from '@heroicons/react/24/outline';
+import { RestaurantFormData } from '@/types/restaurant.type';
+import {
+  CheckBadgeIcon,
+  ExclamationCircleIcon,
+  LinkIcon,
+  PhoneIcon,
+} from '@heroicons/react/24/outline';
 import { zodResolver } from '@hookform/resolvers/zod';
+import clsx from 'clsx';
+import { useFormState } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import Input from '../Input/Input';
 import Textarea from '../Textarea/Textarea';
 import { getButtonClassName } from '../helpers/getBtnClassName';
 
 export default function RestaurantForm() {
-  const { register, handleSubmit, formState } = useForm<RestaurantSchema>({
+  const { register, handleSubmit, formState } = useForm<RestaurantFormData>({
     mode: 'onSubmit',
     defaultValues: {
       title: '',
       description: '',
       website: '',
       rating: '',
-      cuisine: [],
+      cuisine: '',
       phoneNumber: '',
       address: {
         city: '',
@@ -30,9 +38,14 @@ export default function RestaurantForm() {
     resolver: zodResolver(RestaurantFormSchema),
   });
   const { errors } = formState;
+  const [actionResponse, dispatch] = useFormState(
+    registerRestaurant,
+    undefined,
+  );
 
-  const onSubmit = (data: RestaurantSchema) => {
+  const onSubmit = (data: RestaurantFormData) => {
     console.log(data);
+    dispatch(data);
   };
 
   return (
@@ -60,6 +73,7 @@ export default function RestaurantForm() {
         <Textarea
           labelText="Description about your place"
           type="text"
+          required
           {...register('description')}
           className="col-span-4"
           textareaStyle=" min-h-[80px]"
@@ -70,6 +84,7 @@ export default function RestaurantForm() {
         <Input
           labelText="Website"
           type="text"
+          required
           {...register('website')}
           className="col-span-4"
           inputIcon={<LinkIcon />}
@@ -84,6 +99,7 @@ export default function RestaurantForm() {
           labelText="Cuisine (comma separated)"
           {...register('cuisine')}
           className="col-span-2"
+          required
           placeholder="Select cuisine(s)"
           errorMessage={errors.title ? errors.title.message : ''}
         />
@@ -136,6 +152,25 @@ export default function RestaurantForm() {
         </div>
       </div>
 
+      {actionResponse && (
+        <div
+          className={`${actionResponse ? 'flex' : 'hidden'} mb-4 items-center justify-center space-x-1`}
+        >
+          {actionResponse.success ? (
+            <CheckBadgeIcon className="h-5 w-5  text-green-500" />
+          ) : (
+            <ExclamationCircleIcon className="h-5 w-5  text-red-500" />
+          )}
+          <p
+            className={clsx('text-sm', {
+              'text-red-500': !actionResponse.success,
+              'text-green-500': actionResponse.success,
+            })}
+          >
+            {actionResponse.message}
+          </p>
+        </div>
+      )}
       {/* Submit Button */}
       <div className="col-span-2 flex justify-center">
         <button
