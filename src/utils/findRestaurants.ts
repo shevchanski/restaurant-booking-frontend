@@ -1,8 +1,11 @@
+'use server';
+
 import { API_URI } from '@/constants/config';
 import { SearchParams, SearchResponse } from '@/types/search.type';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import path from 'path';
-import generateSearchParams from './generateSearchParams';
+import ErrorLogger from './ErrorLogger';
+import { generateSearchParams } from './generateSearchParams';
 
 const findRestaurants = async (
   searchParams: SearchParams,
@@ -17,12 +20,7 @@ const findRestaurants = async (
     const response = await axios.get(apiQueryRoute);
     return response.data;
   } catch (error) {
-    if (error instanceof AxiosError) {
-      console.error(error.response?.data?.errorMessage);
-    } else if (error instanceof Error) {
-      console.error(error.message);
-    }
-    console.error(error);
+    ErrorLogger(error);
   }
   return null;
 };
