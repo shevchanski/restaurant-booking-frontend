@@ -33,6 +33,12 @@ export default function NavBar() {
           })}
         </SignedOut>
         <SignedIn>
+          <a
+            href="/register_restaurant"
+            className="duration-200 hover:text-white"
+          >
+            for Business
+          </a>
           <a href="/favorites" className="duration-200 hover:text-white">
             <HeartIcon className="h-7 w-7" />
           </a>
