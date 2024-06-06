@@ -35,10 +35,13 @@ export default function FavoriteButton({ isFavorite = false, rest_id }: Props) {
 
   return (
     <button
-      className={clsx('h-9 w-9 rounded-md bg-zinc-100/60 p-1', {
-        'text-red-500': isFavoured,
-        'hover:text-red-500': !isFavoured,
-      })}
+      className={clsx(
+        'h-9 w-9 rounded-md bg-zinc-100/60 p-1 duration-200 hover:scale-105',
+        {
+          'text-red-500': isFavoured,
+          'hover:text-red-500': !isFavoured,
+        },
+      )}
       onClick={toggleFavorite}
     >
       {!isFavoured ? <OutlinedHearIcon /> : <SolidHeartIcon />}
