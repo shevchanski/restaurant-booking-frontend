@@ -1,7 +1,8 @@
 import { IRestaurant } from '@/types/restaurant.type';
 import Image from 'next/image';
 import React from 'react';
-import FavoriteButton from '../FavouriteButton/FavouriteButton';
+import FavoriteButton from '../FavoriteButton/FavoriteButton';
+import RatingNumber from '../RatingNumber/RatingNumber';
 
 type Props = {
   restaurant: IRestaurant;
@@ -12,14 +13,26 @@ export default function RestaurantCard({
   restaurant,
   isFavorite = false,
 }: Props) {
-  const { title, rating, cuisine, description, _id } = restaurant;
+  const {
+    title,
+    rating,
+    cuisine,
+    address: { city, country },
+    _id,
+    phoneNumber,
+    description,
+  } = restaurant;
 
   return (
-    <div className="relative h-[345px] w-[250px]  overflow-hidden rounded-xl border border-transparent bg-white text-black shadow-lg duration-150 hover:border-red-500">
+    <div className="relative max-h-[390px] w-[250px]  overflow-hidden rounded-xl border border-transparent bg-white text-black shadow-lg duration-150 hover:border-red-500">
       <a href={`/restaurants/${_id}`} className="flex h-full flex-col">
         <div className="absolute right-3 top-3">
           <FavoriteButton rest_id={_id} isFavorite={isFavorite} />
         </div>
+        <RatingNumber
+          rating={rating}
+          className="text-md absolute right-3 top-[125px] rounded-md bg-zinc-100/80 p-1"
+        />
         <Image
           className="max-h-[170px] w-full max-w-[250px] object-cover"
           src={'/img/example-resPhoto.jpg'}
@@ -27,13 +40,18 @@ export default function RestaurantCard({
           height={170}
           alt={`${title} restaurant photo`}
         />
-        <div className=" h-full w-full flex-1  px-6 py-4">
-          <h4 className={` mb-2 h-[48px] text-base font-semibold`}>{title}</h4>
+        <div className=" h-full w-full flex-1 px-6 py-4">
+          <h4 className={`truncate text-base font-semibold`}>{title}</h4>
+          <hr className="my-2 border-t-[1px]" />
           <CardItem itemName="Cuisine">{cuisine.join(', ')}</CardItem>
-          <CardItem itemName="Rating">{rating} / 5</CardItem>
-          <p className=" max-h-12 truncate text-sm italic text-gray-700">
-            {description}
-          </p>
+          <CardItem itemName="Location">{`${city}, ${country}`}</CardItem>
+          {/* <a
+            href={`tel:${phoneNumber}`}
+            className="text-sm text-zinc-600 duration-200 hover:text-zinc-700 hover:underline"
+          >
+            <PhoneIcon className="mr-2 inline h-4 w-4 text-zinc-500" />
+            {phoneNumber}
+          </a> */}
         </div>
       </a>
     </div>
@@ -48,7 +66,7 @@ function CardItem({
   itemName: string;
 }) {
   return (
-    <p className="mb-1 overflow-hidden text-ellipsis text-sm text-gray-700">
+    <p className="mb-1 overflow-hidden truncate text-ellipsis text-sm text-gray-700">
       <span className="mr-1 font-semibold">{itemName}:</span> {children}
     </p>
   );
