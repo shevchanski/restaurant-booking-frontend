@@ -1,10 +1,9 @@
-import CardsBlock from '@/components/CardsBlock/CardsBlock';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import MainSection from '@/components/MainSection/MainSection';
+import RecommendationsBlock from '@/components/RecommendationsBlock/RecommendationsBlock';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import Wrapper from '@/components/Wrapper/Wrapper';
-import { restaurants } from '@/constants/place-holder';
 
 export default async function Home() {
   return (
@@ -24,20 +23,7 @@ export default async function Home() {
         innerBoxStyle="flex flex-col items-center gap-16"
         mainBoxStyle="pt-10"
       >
-        <CardsBlock
-          titleOfBlock="Popular Restaurants"
-          restaurants={restaurants.map(
-            (res, i) => (res = { ...res, _id: i.toString() }),
-          )}
-        />
-        <CardsBlock
-          titleOfBlock="Personal Recomendations"
-          restaurants={restaurants.concat(restaurants)}
-        />
-        <CardsBlock
-          titleOfBlock="Special offers & Discounts"
-          restaurants={restaurants}
-        />
+        <RecommendationsBlock />
       </MainSection>
       <Footer />
     </>
