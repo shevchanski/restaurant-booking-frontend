@@ -1,4 +1,4 @@
-export const API_URI = 'https://restaurant-booking-backend-ochre.vercel.app/';
+export const API_URI = process.env.API_URI ?? 'http://localhost:3001';
 
 export enum ApiRoutes {
   RESTAURANTS = 'restaurants',
