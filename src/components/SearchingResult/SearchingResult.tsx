@@ -1,6 +1,5 @@
 import { SearchParams } from '@/types/search.type';
 import findRestaurants from '@/utils/findRestaurants';
-import getRestaurantsIds from '@/utils/getRestaurantsIds';
 import getUserFavorites from '@/utils/getUserFavorites';
 import { auth } from '@clerk/nextjs/server';
 import { FaceSmileIcon } from '@heroicons/react/24/outline';
@@ -17,13 +16,29 @@ interface Props {
 export default async function SearchingResult({ searchParams }: Props) {
   const { userId } = auth();
 
-  const [searchResponse, userFavorites] = await Promise.all([
+  const [findPromise, userFavoritesPromise] = await Promise.allSettled([
     findRestaurants(searchParams),
-    userId ? getRestaurantsIds(await getUserFavorites(userId)) : [],
+    userId
+      ? (await getUserFavorites(userId, true)).reduce(
+          (acc: string[], favorite) => {
+            if (typeof favorite === 'string') acc.push(favorite);
+            return acc;
+          },
+          [],
+        )
+      : [],
   ]);
 
+  const searchResponse =
+    findPromise.status === 'fulfilled' ? findPromise.value : null;
+
+  const userFavorites =
+    userFavoritesPromise.status === 'fulfilled'
+      ? userFavoritesPromise.value
+      : [];
+
   return (
-    <div className="w-fit">
+    <div className="w-fit px-5 md:px-0">
       <H2>Searching Results</H2>
       <div className="mt-5 grid grid-cols-[200px_1fr] gap-y-2">
         <SortSelector className="col-start-2 justify-self-end" />

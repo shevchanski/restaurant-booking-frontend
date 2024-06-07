@@ -15,6 +15,10 @@ export default function FavoritesBlock() {
   const [favoritesIds, setFavoritesIds] = useState<string[]>([]);
   const { userId } = useAuth();
 
+  useEffect(() => {
+    getFavorites();
+  }, []);
+
   if (!userId) {
     return (
       <Attention>
@@ -25,15 +29,22 @@ export default function FavoritesBlock() {
 
   const getFavorites = async () => {
     setLoading(true);
-    const response = await getUserFavorites(userId);
+
+    const response = (await getUserFavorites(userId, false)).reduce(
+      (acc: IRestaurant[], rest) => {
+        if (typeof rest !== 'string') {
+          acc.push(rest);
+        }
+        return acc;
+      },
+      [],
+    );
+
     setFavorites(response);
     setFavoritesIds(getRestaurantsIds(response));
+
     setLoading(false);
   };
-
-  useEffect(() => {
-    getFavorites();
-  }, []);
 
   return (
     <>
