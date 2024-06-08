@@ -5,5 +5,5 @@ interface Props {
 }
 
 export default function Wrapper({ children }: Props) {
-  return <div className="mx-auto h-full w-full max-w-[1280px]">{children}</div>;
+  return <div className="mx-auto w-full max-w-[1280px]">{children}</div>;
 }
