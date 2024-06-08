@@ -4,10 +4,10 @@ import getUserFavorites from '@/utils/getUserFavorites';
 import { auth } from '@clerk/nextjs/server';
 import { FaceSmileIcon } from '@heroicons/react/24/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import H2 from '../../components/H2/H2';
+import PaginationBar from '../../components/PaginationBar/PaginationBar';
+import SortSelector from '../../components/SortSelector/SortSelector';
 import CardsGrid from '../CardsGrid/CardsGrid';
-import H2 from '../H2/H2';
-import PaginationBar from '../PaginationBar/PaginationBar';
-import SortSelector from '../SortSelector/SortSelector';
 
 interface Props {
   searchParams: SearchParams;

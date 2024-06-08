@@ -5,9 +5,9 @@ import getRestaurantsIds from '@/utils/getRestaurantsIds';
 import getUserFavorites from '@/utils/getUserFavorites';
 import { useAuth } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
-import Attention from '../Attention/Attention';
+import Attention from '../../components/Attention/Attention';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import CardsGrid from '../CardsGrid/CardsGrid';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 export default function FavoritesBlock() {
   const [isLoading, setLoading] = useState<boolean>(false);

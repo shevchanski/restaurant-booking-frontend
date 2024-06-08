@@ -10,10 +10,10 @@ import { useAuth } from '@clerk/nextjs';
 import { ArrowPathIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { ReactNode, useEffect, useState } from 'react';
-import Attention from '../Attention/Attention';
+import Attention from '../../components/Attention/Attention';
+import H2 from '../../components/H2/H2';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import CardsGrid from '../CardsGrid/CardsGrid';
-import H2 from '../H2/H2';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 type Props = {
   className?: string;
