@@ -1,6 +1,5 @@
 import ApiService from '@/services/api';
 import { SearchParams } from '@/types/search.type';
-import getUserFavorites from '@/utils/getUserFavorites';
 import { auth } from '@clerk/nextjs/server';
 import { FaceSmileIcon } from '@heroicons/react/24/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
@@ -19,7 +18,7 @@ export default async function SearchingResult({ searchParams }: Props) {
   const [findPromise, userFavoritesPromise] = await Promise.allSettled([
     ApiService.searchRestaurants(searchParams),
     userId
-      ? (await getUserFavorites(userId, true)).reduce(
+      ? (await ApiService.getUserFavorites(userId, true)).reduce(
           (acc: string[], favorite) => {
             if (typeof favorite === 'string') acc.push(favorite);
             return acc;
