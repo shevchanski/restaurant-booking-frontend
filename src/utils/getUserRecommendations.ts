@@ -5,11 +5,11 @@ import {
   ApiRoutes,
   DEFAULT_LIMIT_RECOMMENDATIONS,
 } from '@/constants/config';
+import ApiService from '@/services/api';
 import { IRestaurant } from '@/types/restaurant.type';
 import axios from 'axios';
 import path from 'path';
 import ErrorLogger from './ErrorLogger';
-import fetchRestaurantById from './fetchRestaurantById';
 
 async function getUserRecommendations(
   userId: string,
@@ -24,7 +24,7 @@ async function getUserRecommendations(
       const { recommendations } = data;
       if (Array.isArray(recommendations) && recommendations.length) {
         const promisesArray = recommendations.map((restId) =>
-          fetchRestaurantById(restId),
+          ApiService.getRestaurantById(restId),
         );
 
         const [...responses] = await Promise.allSettled(promisesArray);

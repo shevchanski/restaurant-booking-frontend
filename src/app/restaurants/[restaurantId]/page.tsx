@@ -6,7 +6,7 @@ import MainSection from '@/components/MainSection/MainSection';
 import RatingNumber from '@/components/RatingNumber/RatingNumber';
 import RestPhotoCarousel from '@/components/RestPhotoCarousel/RestPhotoCarousel';
 import { atma } from '@/constants/fonts';
-import fetchRestaurantById from '@/utils/fetchRestaurantById';
+import ApiService from '@/services/api';
 import {
   LinkIcon,
   MapPinIcon,
@@ -27,7 +27,7 @@ interface Props {
 export default async function RestaurantPage({
   params: { restaurantId },
 }: Props) {
-  const restaurant = await fetchRestaurantById(restaurantId);
+  const restaurant = await ApiService.getRestaurantById(restaurantId);
 
   return (
     <>
