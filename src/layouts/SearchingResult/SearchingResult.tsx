@@ -1,5 +1,5 @@
+import ApiService from '@/services/api';
 import { SearchParams } from '@/types/search.type';
-import findRestaurants from '@/utils/findRestaurants';
 import getUserFavorites from '@/utils/getUserFavorites';
 import { auth } from '@clerk/nextjs/server';
 import { FaceSmileIcon } from '@heroicons/react/24/outline';
@@ -17,7 +17,7 @@ export default async function SearchingResult({ searchParams }: Props) {
   const { userId } = auth();
 
   const [findPromise, userFavoritesPromise] = await Promise.allSettled([
-    findRestaurants(searchParams),
+    ApiService.searchRestaurants(searchParams),
     userId
       ? (await getUserFavorites(userId, true)).reduce(
           (acc: string[], favorite) => {
