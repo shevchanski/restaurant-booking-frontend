@@ -1,7 +1,7 @@
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import MainSection from '@/components/MainSection/MainSection';
-import RestaurantForm from '@/components/RestaurantForm/RestaurantForm';
+import RestaurantForm from '@/layouts/RestaurantForm/RestaurantForm';
 
 export default function RestaurantRegistrationPage() {
   return (

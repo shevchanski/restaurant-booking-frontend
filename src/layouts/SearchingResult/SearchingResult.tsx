@@ -1,13 +1,12 @@
+import ApiService from '@/services/api';
 import { SearchParams } from '@/types/search.type';
-import findRestaurants from '@/utils/findRestaurants';
-import getUserFavorites from '@/utils/getUserFavorites';
 import { auth } from '@clerk/nextjs/server';
 import { FaceSmileIcon } from '@heroicons/react/24/outline';
 import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
+import H2 from '../../components/H2/H2';
+import PaginationBar from '../../components/PaginationBar/PaginationBar';
+import SortSelector from '../../components/SortSelector/SortSelector';
 import CardsGrid from '../CardsGrid/CardsGrid';
-import H2 from '../H2/H2';
-import PaginationBar from '../PaginationBar/PaginationBar';
-import SortSelector from '../SortSelector/SortSelector';
 
 interface Props {
   searchParams: SearchParams;
@@ -17,9 +16,9 @@ export default async function SearchingResult({ searchParams }: Props) {
   const { userId } = auth();
 
   const [findPromise, userFavoritesPromise] = await Promise.allSettled([
-    findRestaurants(searchParams),
+    ApiService.searchRestaurants(searchParams),
     userId
-      ? (await getUserFavorites(userId, true)).reduce(
+      ? (await ApiService.getUserFavorites(userId, true)).reduce(
           (acc: string[], favorite) => {
             if (typeof favorite === 'string') acc.push(favorite);
             return acc;

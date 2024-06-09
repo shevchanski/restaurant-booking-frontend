@@ -5,8 +5,8 @@ import Header from '@/components/Header/Header';
 import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner';
 import MainSection from '@/components/MainSection/MainSection';
 import SearchBar from '@/components/SearchBar/SearchBar';
-import SearchingResult from '@/components/SearchingResult/SearchingResult';
 import Wrapper from '@/components/Wrapper/Wrapper';
+import SearchingResult from '@/layouts/SearchingResult/SearchingResult';
 import { SearchParams } from '@/types/search.type';
 import { Suspense } from 'react';
 

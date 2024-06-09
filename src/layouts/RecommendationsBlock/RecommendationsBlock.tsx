@@ -4,16 +4,16 @@ import {
   MIN_FAVORITES_FOR_RECOMMENDATIONS,
   SUPPORT_EMAIL,
 } from '@/constants/config';
+import ApiService from '@/services/api';
 import { IRestaurant } from '@/types/restaurant.type';
-import getUserRecommendations from '@/utils/getUserRecommendations';
 import { useAuth } from '@clerk/nextjs';
 import { ArrowPathIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { ReactNode, useEffect, useState } from 'react';
-import Attention from '../Attention/Attention';
+import Attention from '../../components/Attention/Attention';
+import H2 from '../../components/H2/H2';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import CardsGrid from '../CardsGrid/CardsGrid';
-import H2 from '../H2/H2';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 type Props = {
   className?: string;
@@ -22,12 +22,31 @@ type Props = {
 export default function RecommendationsBlock({ className }: Props) {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [recommendations, setRecommendations] = useState<IRestaurant[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const { userId } = useAuth();
 
   const getRecommendations = async () => {
     if (userId) {
       setLoading(true);
-      setRecommendations(await getUserRecommendations(userId));
+      const [res1, res2] = await Promise.allSettled([
+        ApiService.getUserRecommendations(userId),
+        ApiService.getUserFavorites(userId, true),
+      ]);
+
+      setRecommendations((prevState) =>
+        res1.status === 'fulfilled' ? res1.value : prevState,
+      );
+      setFavorites((prevState) =>
+        res2.status === 'fulfilled'
+          ? res2.value.reduce((acc: string[], rest) => {
+              if (typeof rest === 'string') {
+                acc.push(rest);
+              }
+              return acc;
+            }, [])
+          : prevState,
+      );
+
       setLoading(false);
     }
   };
@@ -65,7 +84,10 @@ export default function RecommendationsBlock({ className }: Props) {
                     >
                       <ArrowPathIcon className="duration-300 hover:rotate-180" />
                     </button>
-                    <CardsGrid restaurants={recommendations} />
+                    <CardsGrid
+                      restaurants={recommendations}
+                      favorites={favorites}
+                    />
                   </>
                 ) : (
                   <Attention className="flex flex-col items-center text-center">

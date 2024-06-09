@@ -13,9 +13,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import { useFormState } from 'react-dom';
 import { useForm } from 'react-hook-form';
-import Input from '../Input/Input';
-import Textarea from '../Textarea/Textarea';
-import { getButtonClassName } from '../helpers/getBtnClassName';
+import Input from '../../components/Input/Input';
+import Textarea from '../../components/Textarea/Textarea';
+import { getButtonClassName } from '../../utils/getBtnClassName';
 
 export default function RestaurantForm() {
   const { register, handleSubmit, formState } = useForm<RestaurantFormData>({

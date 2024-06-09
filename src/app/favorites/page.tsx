@@ -1,8 +1,8 @@
 import Attention from '@/components/Attention/Attention';
-import FavoritesBlock from '@/components/FavoritesBlock/FavoritesBlock';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import MainSection from '@/components/MainSection/MainSection';
+import FavoritesBlock from '@/layouts/FavoritesBlock/FavoritesBlock';
 import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 

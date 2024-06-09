@@ -1,7 +1,7 @@
 import { IRestaurant } from '@/types/restaurant.type';
 import clsx from 'clsx';
+import H2 from '../../components/H2/H2';
 import CardsGrid from '../CardsGrid/CardsGrid';
-import H2 from '../H2/H2';
 
 type Props = {
   titleOfBlock: string;

@@ -1,9 +1,9 @@
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import MainSection from '@/components/MainSection/MainSection';
-import RecommendationsBlock from '@/components/RecommendationsBlock/RecommendationsBlock';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import Wrapper from '@/components/Wrapper/Wrapper';
+import RecommendationsBlock from '@/layouts/RecommendationsBlock/RecommendationsBlock';
 
 export default async function Home() {
   return (

@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { getButtonClassName } from '../helpers/getBtnClassName';
+import { getButtonClassName } from '../../utils/getBtnClassName';
 
 interface SearchBarProps {
   className?: string;

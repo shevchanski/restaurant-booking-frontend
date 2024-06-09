@@ -8,7 +8,7 @@ import {
 } from '@heroicons/react/24/solid';
 import clsx from 'clsx';
 import { useFormState, useFormStatus } from 'react-dom';
-import { getButtonClassName } from '../helpers/getBtnClassName';
+import { getButtonClassName } from '../../utils/getBtnClassName';
 
 export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);

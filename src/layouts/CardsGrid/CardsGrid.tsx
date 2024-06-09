@@ -1,6 +1,6 @@
 import { IRestaurant } from '@/types/restaurant.type';
 import clsx from 'clsx';
-import RestaurantCard from '../RestaurantCard/RestaurantCard';
+import RestaurantCard from '../../components/RestaurantCard/RestaurantCard';
 
 interface Props {
   restaurants: IRestaurant[];
