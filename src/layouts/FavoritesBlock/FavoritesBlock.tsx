@@ -3,6 +3,7 @@
 import ApiService from '@/services/api';
 import { IRestaurant } from '@/types/restaurant.type';
 import getRestaurantsIds from '@/utils/getRestaurantsIds';
+import { isRestaurantsArray } from '@/utils/isRestaurantsArray';
 import { useAuth } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import Attention from '../../components/Attention/Attention';
@@ -30,19 +31,12 @@ export default function FavoritesBlock() {
   const getFavorites = async () => {
     setLoading(true);
 
-    const response = (await ApiService.getUserFavorites(userId, false)).reduce(
-      (acc: IRestaurant[], rest) => {
-        if (typeof rest !== 'string') {
-          acc.push(rest);
-        }
-        return acc;
-      },
-      [],
-    );
-    console.log(response);
+    const response = await ApiService.getUserFavorites(userId, false);
 
-    setFavorites(response);
-    setFavoritesIds(getRestaurantsIds(response));
+    if (isRestaurantsArray(response)) {
+      setFavorites(response);
+      setFavoritesIds(getRestaurantsIds(response));
+    }
 
     setLoading(false);
   };
