@@ -94,11 +94,12 @@ export default function RecommendationsBlock({ className }: Props) {
                     <p>
                       Recommendations can be created if you{' '}
                       <span className="font-semibold">
-                        more then {MIN_FAVORITES_FOR_RECOMMENDATIONS}
+                        {' '}
+                        {MIN_FAVORITES_FOR_RECOMMENDATIONS} and more
                       </span>{' '}
                       restaurants into you favorite list.
-                      <br /> If you have but more then 2 and still doesn`t get
-                      recommendations. In that case, please, connect us on{' '}
+                      <br /> If you still do not get recommendations, please,
+                      connect us on{' '}
                       <Link href={`mailto:${SUPPORT_EMAIL}`}>
                         {SUPPORT_EMAIL}
                       </Link>
