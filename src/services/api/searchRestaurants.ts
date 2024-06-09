@@ -10,8 +10,6 @@ import { api_instance } from './axios_instance';
 export async function searchRestaurants(
   searchParams: SearchParams,
 ): Promise<SearchResponse | null> {
-  console.log(searchParams);
-
   try {
     const res = await api_instance.get<SearchResponse>(
       path.join(ApiRoutes.RESTAURANTS, generateSearchParams(searchParams)),

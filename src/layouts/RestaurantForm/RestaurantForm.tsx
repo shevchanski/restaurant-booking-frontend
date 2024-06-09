@@ -44,7 +44,6 @@ export default function RestaurantForm() {
   );
 
   const onSubmit = (data: RestaurantFormData) => {
-    console.log(data);
     dispatch(data);
   };
 

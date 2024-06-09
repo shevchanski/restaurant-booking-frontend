@@ -14,8 +14,6 @@ export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
 
   const handleSubmit = (formData: FormData) => {
-    console.log(formData);
-
     dispatch(formData);
   };
 

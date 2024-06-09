@@ -28,8 +28,6 @@ export default function TopRated({ className }: Props) {
       userId ? ApiService.getUserFavorites(userId, true) : [],
     ]);
 
-    console.log(res1, res2);
-
     setTopRated((prevState) =>
       res1.status === 'fulfilled' ? res1.value : prevState,
     );

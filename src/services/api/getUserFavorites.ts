@@ -15,8 +15,6 @@ export async function getUserFavorites(
       favorites: (string | IRestaurant)[];
     }>(path.join(ApiRoutes.FAVORITES, `${userId}?onlyIds=${onlyIds}`));
 
-    console.log(data);
-
     return data.favorites;
   } catch (error) {
     ErrorLogger(error);
