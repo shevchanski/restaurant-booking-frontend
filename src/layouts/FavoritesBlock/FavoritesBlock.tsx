@@ -10,7 +10,7 @@ import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import CardsGrid from '../CardsGrid/CardsGrid';
 
 export default function FavoritesBlock() {
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [favorites, setFavorites] = useState<IRestaurant[]>([]);
   const [favoritesIds, setFavoritesIds] = useState<string[]>([]);
   const { userId } = useAuth();
