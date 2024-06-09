@@ -1,9 +1,15 @@
+import clsx from 'clsx';
 import React from 'react';
 
 interface Props {
   children: React.ReactNode;
+  className?: string;
 }
 
-export default function Wrapper({ children }: Props) {
-  return <div className="mx-auto w-full max-w-[1280px]">{children}</div>;
+export default function Wrapper({ children, className }: Props) {
+  return (
+    <div className={clsx(className, 'mx-auto w-full max-w-[1280px]')}>
+      {children}
+    </div>
+  );
 }
