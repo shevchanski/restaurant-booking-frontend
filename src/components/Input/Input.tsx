@@ -35,7 +35,7 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
       <div className="relative">
         <input
           className={clsx(
-            'aria-disabled: peer block w-full rounded-md border border-gray-200 py-[9px] text-sm outline-2 placeholder:text-gray-500',
+            'aria-disabled: peer block w-full rounded-md border border-gray-200 px-[12px] py-[9px] text-sm outline-2 placeholder:text-gray-500',
             { 'pl-10': inputIcon },
           )}
           id={_id}
