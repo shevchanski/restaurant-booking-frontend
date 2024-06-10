@@ -13,3 +13,13 @@ export const DEFAULT_LIMIT_RECOMMENDATIONS = 4;
 
 export const SUPPORT_EMAIL = 'support@table.bar.com';
 export const DEFAULT_TOP_RATED_LIMIT = 4;
+
+export const BYTE_SIZE = 1024;
+
+export const FileUploadConfig = {
+  MAX_FILE_SIZE: 15 * BYTE_SIZE * BYTE_SIZE, // 15 MB
+  FILE_TYPES: [
+    'image/jpeg', // .jpg, .jpeg, .jfif, .pjpeg, .pjp
+    'image/png', // .png
+  ],
+};
