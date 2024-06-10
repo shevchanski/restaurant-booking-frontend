@@ -12,7 +12,6 @@ const RestaurantFormSchema = z.object({
   title: z.string({ message: 'Title is required' }),
   description: z.string().optional(),
   website: z.string().optional(),
-  rating: z.string().optional(),
   //   cuisine: z.array(z.string()),
   cuisine: z.string(), // FIXME temporary change it to string, for test
   phoneNumber: z.string(),

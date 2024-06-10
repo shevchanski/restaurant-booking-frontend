@@ -24,7 +24,6 @@ export default function RestaurantForm() {
       title: '',
       description: '',
       website: '',
-      rating: '',
       cuisine: '',
       phoneNumber: '',
       address: {
@@ -72,7 +71,6 @@ export default function RestaurantForm() {
         <Textarea
           labelText="Description about your place"
           type="text"
-          required
           {...register('description')}
           className="col-span-4"
           textareaStyle=" min-h-[80px]"
@@ -83,7 +81,6 @@ export default function RestaurantForm() {
         <Input
           labelText="Website"
           type="text"
-          required
           {...register('website')}
           className="col-span-4"
           inputIcon={<LinkIcon />}
