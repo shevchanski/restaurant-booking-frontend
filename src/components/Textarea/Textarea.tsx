@@ -1,6 +1,7 @@
 import uniqueHtmlId from '@/utils/uniqueHtmlId';
 import clsx from 'clsx';
 import React, { forwardRef } from 'react';
+import { FieldErrors } from 'react-hook-form';
 
 interface Props extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   labelText: React.ReactNode;
@@ -8,6 +9,7 @@ interface Props extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   errorMessage?: string;
   textareaStyle?: string;
   inputType?: 'input' | 'textarea';
+  validErrors?: FieldErrors;
 }
 
 /**
@@ -24,11 +26,23 @@ const Textarea = forwardRef<HTMLTextAreaElement, Props>(function Textarea(
     inputType = 'input',
     textareaStyle,
     errorMessage,
+    validErrors,
+    name,
     ...rest
   }: Props,
   ref,
 ) {
   const _id = uniqueHtmlId('input-');
+  const isInvalid = errorMessage
+    ? true
+    : validErrors && name && validErrors[name]
+      ? true
+      : false;
+  const errorMsg = errorMessage
+    ? errorMessage
+    : validErrors && name
+      ? validErrors[name]?.message?.toString()
+      : undefined;
 
   return (
     <div className={className}>
@@ -40,19 +54,20 @@ const Textarea = forwardRef<HTMLTextAreaElement, Props>(function Textarea(
         {required ? (
           <span className=" ml-1 text-red-600">*</span>
         ) : (
-          <span className="ml-2 text-[10px]">(optional)</span>
+          <span className="ml-2 text-[8px]">(optional)</span>
         )}
       </label>
       <div className="relative">
         <textarea
           className={clsx(
-            'aria-disabled: peer block w-full rounded-md border border-gray-200 py-[9px] text-sm outline-2 placeholder:text-gray-500',
+            ' peer block w-full rounded-md border border-gray-200 py-[9px] text-sm outline-2 placeholder:text-gray-500 invalid:border-red-500  focus:invalid:ring-red-500',
             { 'pl-10': inputIcon },
             textareaStyle,
           )}
           id={_id}
           required={required}
           ref={ref}
+          name={name}
           {...rest}
         ></textarea>
         {inputIcon && (
@@ -61,7 +76,18 @@ const Textarea = forwardRef<HTMLTextAreaElement, Props>(function Textarea(
           </div>
         )}
       </div>
-      {errorMessage && <p className="">{errorMessage}</p>}
+      <p
+        role="alert"
+        className={clsx(
+          'mb-1 mt-[2px] h-4 pl-2 text-xs text-red-600 duration-75',
+          {
+            'opacity-0': !isInvalid,
+            'opacity-100': isInvalid,
+          },
+        )}
+      >
+        {errorMsg}
+      </p>
     </div>
   );
 });
