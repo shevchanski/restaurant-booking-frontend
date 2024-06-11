@@ -4,6 +4,7 @@ import { getUserFavorites } from './getUserFavorites';
 import getUserRecommendations from './getUserRecommendations';
 import { registerRestaurant } from './registerRestaurant';
 import { searchRestaurants } from './searchRestaurants';
+import { uploadRestPhotos } from './uploadRestPhotos';
 
 const ApiService = {
   searchRestaurants,
@@ -11,6 +12,7 @@ const ApiService = {
   getUserFavorites,
   getUserRecommendations,
   getTopRatedRestaurants,
+  uploadRestPhotos,
   registerRestaurant,
 };
 

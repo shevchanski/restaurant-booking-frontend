@@ -6,6 +6,7 @@ export enum ApiRoutes {
   FAVORITES = 'favorites',
   RECOMMENDATIONS = 'restaurants/recommendations',
   TOP_RATED = `restaurants/top_rated`,
+  REST_PHOTO_UPLOAD = '/files/restaurants',
 }
 
 export const MIN_FAVORITES_FOR_RECOMMENDATIONS = 2;
