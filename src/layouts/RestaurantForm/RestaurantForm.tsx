@@ -2,7 +2,6 @@
 
 import { FileUploadConfig } from '@/constants/config';
 import { RestaurantFormSchema } from '@/schemas/rest-registation.schema';
-import ApiService from '@/services/api';
 import { ActionResponse } from '@/types/global.type';
 import { RestaurantFormData } from '@/types/restaurant.type';
 import {
@@ -45,33 +44,35 @@ export default function RestaurantForm() {
   >(undefined);
 
   const onSubmit = async (data: RestaurantFormData) => {
-    const response: ActionResponse = {
-      success: false,
-      message: 'Registration is not successful! Try on more time.',
-    };
+    console.log(data);
 
-    const { photos, ...restData } = data;
+    //  const response: ActionResponse = {
+    //    success: false,
+    //    message: 'Registration is not successful! Try on more time.',
+    //  };
 
-    const regRes = await ApiService.registerRestaurant(restData);
+    //  const { photos, ...restData } = data;
 
-    if (regRes) {
-      setSubmitResponse({ success: true, message: 'Successfully registered' });
-    }
+    //  const regRes = await ApiService.registerRestaurant(restData);
 
-    if (photos && regRes) {
-      const promiseArray = photos.map((photo) => {
-        const formData = new FormData();
-        formData.append('restaurant_photo', photo);
-        return ApiService.uploadRestPhotos(formData, regRes._id);
-      });
+    //  if (regRes) {
+    //    setSubmitResponse({ success: true, message: 'Successfully registered' });
+    //  }
 
-      await Promise.all(promiseArray);
+    //  if (photos && regRes) {
+    //    const promiseArray = photos.map((photo) => {
+    //      const formData = new FormData();
+    //      formData.append('restaurant_photo', photo);
+    //      return ApiService.uploadRestPhotos(formData, regRes._id);
+    //    });
 
-      setSubmitResponse({
-        success: true,
-        message: 'Photos successfully uploaded',
-      });
-    }
+    //    await Promise.all(promiseArray);
+
+    //    setSubmitResponse({
+    //      success: true,
+    //      message: 'Photos successfully uploaded',
+    //    });
+    //  }
   };
 
   return (
