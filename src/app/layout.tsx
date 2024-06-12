@@ -19,7 +19,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${jakarta.className} relative flex min-h-screen flex-col bg-white text-black`}
+          className={`${jakarta.className} relative flex min-h-screen flex-col overflow-x-hidden bg-white text-black`}
         >
           {/* <Header /> */}
           {children}
