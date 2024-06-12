@@ -1,5 +1,9 @@
 export const API_URI = process.env.API_URI ?? 'http://localhost:3001';
 
+export enum InstanceParam {
+  REST_ID = ':restaurantId',
+}
+
 export enum ApiRoutes {
   RESTAURANTS = 'restaurants',
   USERS = 'users',
@@ -7,6 +11,7 @@ export enum ApiRoutes {
   RECOMMENDATIONS = 'restaurants/recommendations',
   TOP_RATED = `restaurants/top_rated`,
   REST_PHOTO_UPLOAD = '/files/restaurants',
+  GET_REST_PHOTOS = `restaurants/${InstanceParam.REST_ID}/photos`,
 }
 
 export const MIN_FAVORITES_FOR_RECOMMENDATIONS = 2;

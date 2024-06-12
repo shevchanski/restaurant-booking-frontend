@@ -1,3 +1,4 @@
+import { getRestaurantPhotos } from './getRestPhotos';
 import { getRestaurantById } from './getRestaurantsById';
 import { getTopRatedRestaurants } from './getTopRatedRestaurants';
 import { getUserFavorites } from './getUserFavorites';
@@ -14,6 +15,7 @@ const ApiService = {
   getTopRatedRestaurants,
   uploadRestPhotos,
   registerRestaurant,
+  getRestaurantPhotos,
 };
 
 export default ApiService;
