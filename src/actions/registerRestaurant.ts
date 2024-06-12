@@ -15,7 +15,6 @@ export const registerRestaurant: FormAction = async (prevState, formData) => {
     await axios.post(path.join(API_URI, ApiRoutes.RESTAURANTS), {
       ...formData,
       cuisine: formData.cuisine.split(', '),
-      rating: 5,
     });
 
     return { success: true, message: 'Restaurant successfully registered' };
