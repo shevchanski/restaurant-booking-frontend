@@ -1,7 +1,9 @@
 'use client';
 
-import { registerRestaurant } from '@/actions/registerRestaurant';
+import { FileUploadConfig } from '@/constants/config';
 import { RestaurantFormSchema } from '@/schemas/rest-registation.schema';
+import ApiService from '@/services/api';
+import { ActionResponse } from '@/types/global.type';
 import { RestaurantFormData } from '@/types/restaurant.type';
 import {
   CheckBadgeIcon,
@@ -11,39 +13,65 @@ import {
 } from '@heroicons/react/24/outline';
 import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
-import { useFormState } from 'react-dom';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Input from '../../components/Input/Input';
 import Textarea from '../../components/Textarea/Textarea';
 import { getButtonClassName } from '../../utils/getBtnClassName';
 
 export default function RestaurantForm() {
-  const { register, handleSubmit, formState } = useForm<RestaurantFormData>({
-    mode: 'onSubmit',
-    defaultValues: {
-      title: '',
-      description: '',
-      website: '',
-      cuisine: '',
-      phoneNumber: '',
-      address: {
-        city: '',
-        country: '',
-        post_code: '',
-        street_address: '',
-        region: '',
+  const { register, handleSubmit, formState, setValue } =
+    useForm<RestaurantFormData>({
+      mode: 'onChange',
+      defaultValues: {
+        title: '',
+        description: '',
+        website: undefined,
+        cuisine: '',
+        phoneNumber: '',
+        address: {
+          city: '',
+          country: '',
+          post_code: '',
+          street_address: '',
+          region: '',
+        },
       },
-    },
-    resolver: zodResolver(RestaurantFormSchema),
-  });
+      resolver: zodResolver(RestaurantFormSchema),
+    });
   const { errors } = formState;
-  const [actionResponse, dispatch] = useFormState(
-    registerRestaurant,
-    undefined,
-  );
+  const [submitResponse, setSubmitResponse] = useState<
+    ActionResponse | undefined
+  >(undefined);
 
-  const onSubmit = (data: RestaurantFormData) => {
-    dispatch(data);
+  const onSubmit = async (data: RestaurantFormData) => {
+    const response: ActionResponse = {
+      success: false,
+      message: 'Registration is not successful! Try on more time.',
+    };
+
+    const { photos, ...restData } = data;
+
+    const regRes = await ApiService.registerRestaurant(restData);
+
+    if (regRes) {
+      setSubmitResponse({ success: true, message: 'Successfully registered' });
+    }
+
+    if (photos && regRes) {
+      const promiseArray = photos.map((photo) => {
+        const formData = new FormData();
+        formData.append('restaurant_photo', photo);
+        return ApiService.uploadRestPhotos(formData, regRes._id);
+      });
+
+      await Promise.all(promiseArray);
+
+      setSubmitResponse({
+        success: true,
+        message: 'Photos successfully uploaded',
+      });
+    }
   };
 
   return (
@@ -55,7 +83,7 @@ export default function RestaurantForm() {
         Register <span className="text-red-500">Your</span> Restaurant
       </h2>
 
-      <div className="grid grid-cols-4 gap-x-2 gap-y-4">
+      <div className="mb-5 grid grid-cols-4 gap-x-2 gap-y-[2px]">
         {/* Title */}
         <Input
           labelText="Title"
@@ -64,7 +92,7 @@ export default function RestaurantForm() {
           required
           className="col-span-full"
           placeholder="Enter a name of your restaurant"
-          errorMessage={errors.title ? errors.title.message : ''}
+          validErrors={errors}
         />
 
         {/* Description */}
@@ -75,6 +103,7 @@ export default function RestaurantForm() {
           className="col-span-4"
           textareaStyle=" min-h-[80px]"
           placeholder="Consequat sunt ipsum culpa eiusmod reprehenderit esse laboris sit duis nisi cupidatat."
+          validErrors={errors}
         />
 
         {/* Website */}
@@ -85,10 +114,8 @@ export default function RestaurantForm() {
           className="col-span-4"
           inputIcon={<LinkIcon />}
           placeholder="https://your.website.com/"
+          validErrors={errors}
         />
-
-        {/* Rating */}
-        {/* <Input labelText="Rating" {...register('rating')} type="number" /> */}
 
         {/* Cuisine */}
         <Input
@@ -97,7 +124,7 @@ export default function RestaurantForm() {
           className="col-span-2"
           required
           placeholder="Select cuisine(s)"
-          errorMessage={errors.title ? errors.title.message : ''}
+          validErrors={errors}
         />
 
         {/* Phone Number */}
@@ -108,71 +135,95 @@ export default function RestaurantForm() {
           className="col-span-2"
           required
           inputIcon={<PhoneIcon />}
+          validErrors={errors}
         />
 
         {/* Address Section */}
-        <div className="col-span-full mb-6 grid grid-cols-2 gap-x-2 gap-y-4">
-          <h3 className="col-span-2 mb-2 text-xl font-semibold">Address</h3>
-          <Input
-            labelText="City"
-            {...register('address.city')}
-            type="text"
-            required
-            placeholder="Kyiv"
-          />
-          <Input
-            labelText="Country"
-            {...register('address.country')}
-            type="text"
-            required
-            placeholder="Ukraine"
-          />
-          <Input
-            labelText="Street Address"
-            {...register('address.street_address')}
-            required
-            className="col-span-2"
-          />
-          <Input
-            labelText="Post Code"
-            {...register('address.post_code')}
-            type="text"
-            required
-          />
+        <h3 className="col-span-full mb-2 text-xl font-semibold">Address</h3>
+        <Input
+          labelText="City"
+          {...register('address.city')}
+          type="text"
+          required
+          placeholder="Kyiv"
+          className="col-span-2"
+          validErrors={errors}
+        />
+        <Input
+          labelText="Country"
+          {...register('address.country')}
+          type="text"
+          required
+          placeholder="Ukraine"
+          className="col-span-2"
+          validErrors={errors}
+        />
+        <Input
+          labelText="Street Address"
+          {...register('address.street_address')}
+          required
+          className="col-span-full"
+          validErrors={errors}
+        />
+        <Input
+          labelText="Post Code"
+          {...register('address.post_code')}
+          type="text"
+          required
+          className="col-span-2"
+          validErrors={errors}
+        />
+        <Input
+          labelText="Region"
+          {...register('address.region')}
+          type="text"
+          className="col-span-2"
+          validErrors={errors}
+        />
 
-          <Input
-            labelText="Region"
-            {...register('address.region')}
-            type="text"
-          />
-        </div>
+        {/* Input to upload photos */}
+        <Input
+          labelText="Restaurant's photos"
+          type="file"
+          className="col-span-full"
+          multiple
+          {...register('photos')}
+          //  aria-invalid={!fileInputState.isReady}
+          accept={FileUploadConfig.FILE_TYPES.join(',')}
+          size={FileUploadConfig.MAX_FILE_SIZE}
+          //  errorMessage={fileInputState.message}
+          validErrors={errors}
+        />
       </div>
 
-      {actionResponse && (
+      {submitResponse && (
         <div
-          className={`${actionResponse ? 'flex' : 'hidden'} mb-4 items-center justify-center space-x-1`}
+          className={`${submitResponse ? 'flex' : 'hidden'} mb-4 items-center justify-center space-x-1`}
         >
-          {actionResponse.success ? (
+          {submitResponse.success ? (
             <CheckBadgeIcon className="h-5 w-5  text-green-500" />
           ) : (
             <ExclamationCircleIcon className="h-5 w-5  text-red-500" />
           )}
           <p
             className={clsx('text-sm', {
-              'text-red-500': !actionResponse.success,
-              'text-green-500': actionResponse.success,
+              'text-red-500': !submitResponse.success,
+              'text-green-500': submitResponse.success,
             })}
           >
-            {actionResponse.message}
+            {submitResponse.message}
           </p>
         </div>
       )}
+
       {/* Submit Button */}
       <div className="col-span-2 flex justify-center">
         <button
           type="submit"
-          //  className="rounded-md bg-blue-500 px-6 py-2 text-white hover:bg-blue-600"
-          className={getButtonClassName()}
+          className={clsx(
+            getButtonClassName(),
+            'disabled:hover disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-60',
+          )}
         >
           Register
         </button>

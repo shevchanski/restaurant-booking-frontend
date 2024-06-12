@@ -1,5 +1,6 @@
 'use client';
 
+import ApiService from '@/services/api';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import { EmblaCarouselType } from 'embla-carousel';
@@ -26,10 +27,12 @@ export default function RestPhotoCarousel({
 }: Props) {
   const [currentSlide, setCurrentSlide] = useState<number>(1);
   const [slidesCount, setSlidesCount] = useState<number>(1);
+  const [photos, setPhotos] = useState<string[]>([]);
 
   const [emblaRef, emblaAPI] = useEmblaCarousel({
     loop: false,
     skipSnaps: true,
+    watchSlides: true,
   });
 
   const scrollNext = useCallback(() => {
@@ -40,18 +43,33 @@ export default function RestPhotoCarousel({
     if (emblaAPI) emblaAPI.scrollPrev();
   }, [emblaAPI]);
 
-  const changeCurrentSlide = useCallback((emblaApi: EmblaCarouselType) => {
+  const changeCurrentSlide = (emblaApi: EmblaCarouselType) => {
     setCurrentSlide(emblaApi.selectedScrollSnap() + 1);
-  }, []);
+  };
 
   const defineSlidesCount = (emblaApi: EmblaCarouselType) => {
     setSlidesCount(emblaApi.scrollSnapList().length);
   };
 
+  const getRestaurantPhotos = async () => {
+    const res = await ApiService.getRestaurantPhotos(restId);
+    if (res.length) {
+      setPhotos(res);
+    } else {
+      setPhotos(imagesArray);
+    }
+  };
+
   useEffect(() => {
+    console.log('mount');
+
+    getRestaurantPhotos();
     if (emblaAPI) {
       defineSlidesCount(emblaAPI);
-      emblaAPI.on('select', changeCurrentSlide).init(emblaAPI);
+      emblaAPI
+        .on('select', changeCurrentSlide)
+        .on('reInit', defineSlidesCount)
+        .init(emblaAPI);
     }
   }, [emblaAPI]);
 
@@ -62,7 +80,7 @@ export default function RestPhotoCarousel({
         ref={emblaRef}
       >
         <div className="flex h-full">
-          {imagesArray.map((imgSrc, i) => (
+          {photos.map((imgSrc, i) => (
             <Slide key={i}>
               <Image
                 src={imgSrc}
