@@ -43,7 +43,7 @@ export default async function SearchingResult({ searchParams }: Props) {
       <H2>Searching Results</H2>
       <div
         className={clsx('mt-5   ', {
-          'grid grid-cols-[200px_1fr] gap-y-2':
+          'grid gap-y-2 md:grid-cols-[200px_1fr]':
             searchResponse?.restaurants.length,
           'w-9/12': !searchResponse?.restaurants.length,
         })}
