@@ -5,6 +5,7 @@ import SearchSchema from '@/schemas/search.schema';
 import { SearchData } from '@/types/search.type';
 import { generateSearchParams } from '@/utils/generateSearchParams';
 import { zodResolver } from '@hookform/resolvers/zod';
+import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
@@ -38,7 +39,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
 
   return (
     <div
-      className={`${className} h-[60px] w-full rounded-[80px] bg-white px-[8px] md:h-[86px] md:w-7/12 md:px-[30px]`}
+      className={`${className} h-[60px] w-full rounded-[80px] bg-white px-[8px] md:w-7/12 lg:h-[86px] lg:px-[30px]`}
     >
       <form
         onSubmit={handleSubmit(handleSearch)}
@@ -61,7 +62,10 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
           />
         </label>
 
-        <button className={getButtonClassName()} type="submit">
+        <button
+          className={clsx(getButtonClassName(), 'hidden md:block')}
+          type="submit"
+        >
           Search
         </button>
       </form>
