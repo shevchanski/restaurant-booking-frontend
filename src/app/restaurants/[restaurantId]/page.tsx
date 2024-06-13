@@ -1,5 +1,6 @@
 'use server';
 
+import BackButton from '@/components/BackButton/BackButton';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import MainSection from '@/components/MainSection/MainSection';
@@ -8,6 +9,7 @@ import RestPhotoCarousel from '@/components/RestPhotoCarousel/RestPhotoCarousel'
 import { atma } from '@/constants/fonts';
 import ApiService from '@/services/api';
 import {
+  ArrowLeftStartOnRectangleIcon,
   LinkIcon,
   MapPinIcon,
   PhoneIcon,
@@ -33,9 +35,12 @@ export default async function RestaurantPage({
     <>
       <Header />
 
-      <MainSection>
+      <MainSection mainBoxStyle="pt-5 md:pt-20">
         {restaurant ? (
           <div className="grid-rows-[minmax(350px, 1fr)_1fr]  grid h-full w-full grid-cols-8 gap-3 gap-y-5">
+            <BackButton className=" col-span-3 ml-5 hidden w-fit items-center gap-2 rounded-full border px-4 py-1 text-xl duration-150 hover:text-red-500 md:col-start-2 md:ml-0 md:flex md:text-base">
+              <ArrowLeftStartOnRectangleIcon className="h-6 w-6" /> Back
+            </BackButton>
             {/* Photos Carousel */}
             <RestPhotoCarousel
               className="col-span-full md:col-span-6 md:col-start-2"
