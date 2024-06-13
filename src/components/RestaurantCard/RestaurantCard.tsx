@@ -9,6 +9,14 @@ type Props = {
   isFavorite: boolean;
 };
 
+const examplePhotos = [
+  '/img/rest-1.jpg',
+  '/img/rest-2.jpg',
+  '/img/rest-3.jpg',
+  '/img/rest-4.jpg',
+  '/img/rest-5.jpg',
+];
+
 export default function RestaurantCard({
   restaurant,
   isFavorite = false,
@@ -23,6 +31,12 @@ export default function RestaurantCard({
     description,
   } = restaurant;
 
+  const imgSrc = (() => {
+    const randIndex = Math.floor(Math.random() * examplePhotos.length);
+
+    return examplePhotos[randIndex];
+  })();
+
   return (
     <div className="relative max-h-[390px] w-[250px]  overflow-hidden rounded-xl border border-transparent bg-white text-black shadow-lg duration-150 hover:border-red-500">
       <a href={`/restaurants/${_id}`} className="flex h-full flex-col">
@@ -34,8 +48,8 @@ export default function RestaurantCard({
           className="text-md absolute right-3 top-[125px] rounded-md bg-zinc-100/80 p-1"
         />
         <Image
-          className="max-h-[170px] w-full max-w-[250px] object-cover"
-          src={'/img/example-resPhoto.jpg'}
+          className="h-[170px] w-full max-w-[250px] object-cover"
+          src={imgSrc}
           width={250}
           height={170}
           alt={`${title} restaurant photo`}

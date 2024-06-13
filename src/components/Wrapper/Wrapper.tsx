@@ -8,7 +8,7 @@ interface Props {
 
 export default function Wrapper({ children, className }: Props) {
   return (
-    <div className={clsx('mx-auto w-full max-w-[1280px] px-5', className)}>
+    <div className={clsx(className, 'mx-auto w-full max-w-[1280px]')}>
       {children}
     </div>
   );
