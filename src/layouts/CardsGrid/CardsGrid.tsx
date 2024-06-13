@@ -11,7 +11,7 @@ export default function CardsGrid({ restaurants, favorites = [] }: Props) {
   return (
     <div
       className={clsx(
-        `grid w-fit grid-cols-2 gap-4 md:grid-cols-3 min-[1200px]:grid-cols-4`,
+        `grid w-fit grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 min-[1200px]:grid-cols-4`,
       )}
     >
       {...restaurants.map((rest, i) => {
