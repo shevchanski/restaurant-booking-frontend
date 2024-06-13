@@ -121,7 +121,7 @@ export default function RestaurantForm() {
         <Input
           labelText="Cuisine (comma separated)"
           {...register('cuisine')}
-          className="col-span-2"
+          className="col-span-full md:col-span-2"
           required
           placeholder="Select cuisine(s)"
           validErrors={errors}
@@ -132,10 +132,11 @@ export default function RestaurantForm() {
           labelText="Phone Number"
           {...register('phoneNumber')}
           type="tel"
-          className="col-span-2"
+          className="col-span-full md:col-span-2"
           required
           inputIcon={<PhoneIcon />}
           validErrors={errors}
+          placeholder="+380 (89) 999-99-99"
         />
 
         {/* Address Section */}
