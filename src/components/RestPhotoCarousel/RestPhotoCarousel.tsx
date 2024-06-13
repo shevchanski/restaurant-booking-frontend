@@ -75,10 +75,7 @@ export default function RestPhotoCarousel({
 
   return (
     <div {...rest} className={className}>
-      <div
-        className={clsx(' h-[370px]  overflow-hidden rounded-lg')}
-        ref={emblaRef}
-      >
+      <div className={clsx(' h-[370px]  overflow-hidden ')} ref={emblaRef}>
         <div className="flex h-full">
           {photos.map((imgSrc, i) => (
             <Slide key={i}>
@@ -86,10 +83,9 @@ export default function RestPhotoCarousel({
                 src={imgSrc}
                 height={0}
                 width={370}
-                sizes="100vw"
-                style={{ height: '370px', width: 'auto' }}
+                sizes="60vw"
                 alt="One of restaurant photos"
-                className="h-[370px] rounded-lg"
+                className=" h-full w-full object-contain md:h-[370px] md:w-auto md:rounded-lg"
               />
             </Slide>
           ))}
@@ -126,7 +122,7 @@ function Slide({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={clsx(
-        ' relative mx-1 h-full flex-[0_0_auto] first:ml-0 last:mr-0',
+        ' relative flex h-full flex-[0_0_100%] items-center justify-center first:ml-0 last:mr-0 md:mx-1 md:block md:flex-[0_0_auto]',
       )}
     >
       {children}
