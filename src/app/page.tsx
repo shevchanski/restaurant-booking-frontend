@@ -9,16 +9,17 @@ import TopRated from '@/layouts/TopRated/TopRatedRestaurants';
 export default async function Home() {
   return (
     <>
-      <Header />
-      <div className="absolute top-0 z-[-99] h-[850px] w-full bg-[url('/img/mainPage-bg.jpg')] bg-cover bg-center bg-no-repeat"></div>
-      <Wrapper>
-        <div className="flex min-h-[752px] flex-col items-center pt-[180px]">
-          <h1 className="text-center text-6xl text-white">
-            Explore, <span className="text-red-500">Reserve,</span> and Enjoy
-          </h1>
-          <SearchBar className="mt-14" />
-        </div>
-      </Wrapper>
+      <div className=" h-[650px] w-full bg-[url('/img/mainPage-bg.jpg')] bg-cover bg-center bg-no-repeat md:h-[850px]">
+        <Header />
+        <Wrapper>
+          <div className="mt-[100px] flex flex-col items-center">
+            <h1 className="text-center text-5xl text-white md:text-6xl">
+              Explore, <span className="text-red-500">Reserve,</span> and Enjoy
+            </h1>
+            <SearchBar className="mt-14" />
+          </div>
+        </Wrapper>
+      </div>
 
       <MainSection
         innerBoxStyle="flex flex-col items-center gap-16"
