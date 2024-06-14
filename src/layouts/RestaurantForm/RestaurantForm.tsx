@@ -134,6 +134,7 @@ export default function RestaurantForm() {
           type="tel"
           className="col-span-full md:col-span-2"
           required
+          mask="phone"
           inputIcon={<PhoneIcon />}
           validErrors={errors}
           placeholder="+380 (89) 999-99-99"
