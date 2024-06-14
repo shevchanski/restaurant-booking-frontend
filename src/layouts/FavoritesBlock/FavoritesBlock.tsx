@@ -17,41 +17,44 @@ export default function FavoritesBlock() {
   const { userId } = useAuth();
 
   useEffect(() => {
-    getFavorites();
-  }, []);
+    const getFavorites = async (userId: string) => {
+      setLoading(true);
 
-  if (!userId) {
-    return (
-      <Attention>
-        List of favoured restaurants cannot be loaded if user is not signed in!{' '}
-      </Attention>
-    );
-  }
+      const response = await ApiService.getUserFavorites(userId, false);
 
-  const getFavorites = async () => {
-    setLoading(true);
+      if (isRestaurantsArray(response)) {
+        setFavorites(response);
+        setFavoritesIds(getRestaurantsIds(response));
+      }
 
-    const response = await ApiService.getUserFavorites(userId, false);
+      setLoading(false);
+    };
 
-    if (isRestaurantsArray(response)) {
-      setFavorites(response);
-      setFavoritesIds(getRestaurantsIds(response));
+    if (userId) {
+      getFavorites(userId);
     }
-
-    setLoading(false);
-  };
+  }, [userId]);
 
   return (
     <>
-      {isLoading ? (
-        <LoadingSpinner className="mt-10" />
-      ) : favorites.length ? (
-        <CardsGrid
-          restaurants={favorites as IRestaurant[]}
-          favorites={favoritesIds}
-        />
+      {userId ? (
+        <>
+          {isLoading ? (
+            <LoadingSpinner className="mt-10" />
+          ) : favorites.length ? (
+            <CardsGrid
+              restaurants={favorites as IRestaurant[]}
+              favorites={favoritesIds}
+            />
+          ) : (
+            <h2> At first add to favorites any restaurant</h2>
+          )}
+        </>
       ) : (
-        <h2> At first add to favorites any restaurant</h2>
+        <Attention>
+          List of favoured restaurants cannot be loaded if user is not signed
+          in!{' '}
+        </Attention>
       )}
     </>
   );

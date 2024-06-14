@@ -21,26 +21,26 @@ export default function TopRated({ className }: Props) {
   const [favorites, setFavorites] = useState<string[]>([]);
   const { userId } = useAuth();
 
-  const getTopRated = async () => {
-    setLoading(true);
-    const [res1, res2] = await Promise.allSettled([
-      ApiService.getTopRatedRestaurants(),
-      userId ? ApiService.getUserFavorites(userId, true) : [],
-    ]);
-
-    setTopRated((prevState) =>
-      res1.status === 'fulfilled' ? res1.value : prevState,
-    );
-    setFavorites((prevState) =>
-      res2.status === 'fulfilled' && isStringArray(res2.value)
-        ? res2.value
-        : prevState,
-    );
-
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const getTopRated = async () => {
+      setLoading(true);
+      const [res1, res2] = await Promise.allSettled([
+        ApiService.getTopRatedRestaurants(),
+        userId ? ApiService.getUserFavorites(userId, true) : [],
+      ]);
+
+      setTopRated((prevState) =>
+        res1.status === 'fulfilled' ? res1.value : prevState,
+      );
+      setFavorites((prevState) =>
+        res2.status === 'fulfilled' && isStringArray(res2.value)
+          ? res2.value
+          : prevState,
+      );
+
+      setLoading(false);
+    };
+
     getTopRated();
   }, [userId]);
 

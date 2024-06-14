@@ -1,3 +1,5 @@
+/** eslint-disable react-hooks/exhaustive-deps */
+/** eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import ApiService from '@/services/api';
@@ -43,27 +45,27 @@ export default function RestPhotoCarousel({
     if (emblaAPI) emblaAPI.scrollPrev();
   }, [emblaAPI]);
 
-  const changeCurrentSlide = (emblaApi: EmblaCarouselType) => {
+  const changeCurrentSlide = useCallback((emblaApi: EmblaCarouselType) => {
     setCurrentSlide(emblaApi.selectedScrollSnap() + 1);
-  };
+  }, []);
 
-  const defineSlidesCount = (emblaApi: EmblaCarouselType) => {
+  const defineSlidesCount = useCallback((emblaApi: EmblaCarouselType) => {
     setSlidesCount(emblaApi.scrollSnapList().length);
-  };
-
-  const getRestaurantPhotos = async () => {
-    const res = await ApiService.getRestaurantPhotos(restId);
-    if (res.length) {
-      setPhotos(res);
-    } else {
-      setPhotos(imagesArray);
-    }
-  };
+  }, []);
 
   useEffect(() => {
-    console.log('mount');
+    const getRestaurantPhotos = async () => {
+      const res = await ApiService.getRestaurantPhotos(restId);
+      if (res.length) {
+        setPhotos(res);
+      } else {
+        setPhotos(imagesArray);
+      }
+    };
+    if (!photos.length) {
+      getRestaurantPhotos();
+    }
 
-    getRestaurantPhotos();
     if (emblaAPI) {
       defineSlidesCount(emblaAPI);
       emblaAPI
@@ -71,7 +73,7 @@ export default function RestPhotoCarousel({
         .on('reInit', defineSlidesCount)
         .init(emblaAPI);
     }
-  }, [emblaAPI]);
+  });
 
   return (
     <div {...rest} className={className}>
