@@ -9,7 +9,7 @@ import { IRestaurant } from '@/types/restaurant.type';
 import { useAuth } from '@clerk/nextjs';
 import { ArrowPathIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import Attention from '../../components/Attention/Attention';
 import H2 from '../../components/H2/H2';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
@@ -25,7 +25,7 @@ export default function RecommendationsBlock({ className }: Props) {
   const [favorites, setFavorites] = useState<string[]>([]);
   const { userId } = useAuth();
 
-  const getRecommendations = async () => {
+  const getRecommendations = useCallback(async () => {
     if (userId) {
       setLoading(true);
       const [res1, res2] = await Promise.allSettled([
@@ -49,11 +49,11 @@ export default function RecommendationsBlock({ className }: Props) {
 
       setLoading(false);
     }
-  };
+  }, [userId]);
 
   useEffect(() => {
     getRecommendations();
-  }, [userId]);
+  }, [getRecommendations, userId]);
 
   return (
     <>

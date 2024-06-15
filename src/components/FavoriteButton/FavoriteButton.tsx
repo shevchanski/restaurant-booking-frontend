@@ -1,6 +1,6 @@
 'use client';
 
-import { toggleFavoriteAction } from '@/actions/toggleFavoriteAction';
+import { toggleFavoriteAction } from '@/actions/toggleFavorite';
 import { useAuth } from '@clerk/nextjs';
 import { HeartIcon as OutlinedHearIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as SolidHeartIcon } from '@heroicons/react/24/solid';

@@ -1,3 +1,5 @@
+/** eslint-disable react-hooks/exhaustive-deps */
+/** eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import ApiService from '@/services/api';
@@ -43,27 +45,27 @@ export default function RestPhotoCarousel({
     if (emblaAPI) emblaAPI.scrollPrev();
   }, [emblaAPI]);
 
-  const changeCurrentSlide = (emblaApi: EmblaCarouselType) => {
+  const changeCurrentSlide = useCallback((emblaApi: EmblaCarouselType) => {
     setCurrentSlide(emblaApi.selectedScrollSnap() + 1);
-  };
+  }, []);
 
-  const defineSlidesCount = (emblaApi: EmblaCarouselType) => {
+  const defineSlidesCount = useCallback((emblaApi: EmblaCarouselType) => {
     setSlidesCount(emblaApi.scrollSnapList().length);
-  };
-
-  const getRestaurantPhotos = async () => {
-    const res = await ApiService.getRestaurantPhotos(restId);
-    if (res.length) {
-      setPhotos(res);
-    } else {
-      setPhotos(imagesArray);
-    }
-  };
+  }, []);
 
   useEffect(() => {
-    console.log('mount');
+    const getRestaurantPhotos = async () => {
+      const res = await ApiService.getRestaurantPhotos(restId);
+      if (res.length) {
+        setPhotos(res);
+      } else {
+        setPhotos(imagesArray);
+      }
+    };
+    if (!photos.length) {
+      getRestaurantPhotos();
+    }
 
-    getRestaurantPhotos();
     if (emblaAPI) {
       defineSlidesCount(emblaAPI);
       emblaAPI
@@ -71,14 +73,11 @@ export default function RestPhotoCarousel({
         .on('reInit', defineSlidesCount)
         .init(emblaAPI);
     }
-  }, [emblaAPI]);
+  });
 
   return (
     <div {...rest} className={className}>
-      <div
-        className={clsx(' h-[370px]  overflow-hidden rounded-lg')}
-        ref={emblaRef}
-      >
+      <div className={clsx(' h-[370px]  overflow-hidden ')} ref={emblaRef}>
         <div className="flex h-full">
           {photos.map((imgSrc, i) => (
             <Slide key={i}>
@@ -86,10 +85,9 @@ export default function RestPhotoCarousel({
                 src={imgSrc}
                 height={0}
                 width={370}
-                sizes="100vw"
-                style={{ height: '370px', width: 'auto' }}
+                sizes="60vw"
                 alt="One of restaurant photos"
-                className="h-[370px] rounded-lg"
+                className=" h-full w-full object-contain md:h-[370px] md:w-auto md:rounded-lg"
               />
             </Slide>
           ))}
@@ -126,7 +124,7 @@ function Slide({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={clsx(
-        ' relative mx-1 h-full flex-[0_0_auto] first:ml-0 last:mr-0',
+        ' relative flex h-full flex-[0_0_100%] items-center justify-center first:ml-0 last:mr-0 md:mx-1 md:block md:flex-[0_0_auto]',
       )}
     >
       {children}

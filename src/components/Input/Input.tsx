@@ -1,8 +1,14 @@
 'use client';
 
+import { maskPhone } from '@/utils/inputMasks';
 import uniqueHtmlId from '@/utils/uniqueHtmlId';
 import clsx from 'clsx';
-import React, { MouseEvent, forwardRef, useRef } from 'react';
+import React, {
+  ChangeEventHandler,
+  MouseEvent,
+  forwardRef,
+  useRef,
+} from 'react';
 import { FieldErrors } from 'react-hook-form';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -10,6 +16,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   inputIcon?: React.ReactNode;
   errorMessage?: string;
   validErrors?: FieldErrors;
+  mask?: 'phone';
 }
 
 /**
@@ -27,6 +34,8 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
     name,
     validErrors,
     type,
+    mask,
+    onChange,
     ...rest
   }: Props,
   ref,
@@ -64,6 +73,18 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
     }
   };
 
+  const handleTextChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if (onChange) {
+      onChange(e);
+    }
+
+    if (mask === 'phone') {
+      const phone = maskPhone(e.target.value);
+      e.target.value = phone;
+      return;
+    }
+  };
+
   return (
     <div className={className}>
       <label
@@ -88,6 +109,7 @@ const Input = forwardRef<HTMLInputElement, Props>(function Input(
           ref={refInput}
           required={required}
           type={type}
+          onChange={handleTextChange}
           {...rest}
         />
 

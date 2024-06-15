@@ -13,7 +13,9 @@ export default function MainSection({
   innerBoxStyle,
 }: Props) {
   return (
-    <main className={clsx(mainBoxStyle, ' w-full flex-1 py-20 text-black')}>
+    <main
+      className={clsx(mainBoxStyle, ' w-full flex-1 py-10 text-black md:py-20')}
+    >
       <Wrapper>
         <div className={innerBoxStyle}>{children}</div>
       </Wrapper>

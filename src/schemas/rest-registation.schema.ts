@@ -12,7 +12,7 @@ const AddressSchema = z.object({
 const RestaurantFormSchema = z.object({
   title: z.string({ required_error: 'Title is required' }),
   description: z.string().optional(),
-  website: z.string().optional(),
+  website: z.string().url().optional().or(z.literal('')),
   //   cuisine: z.array(z.string()),
   cuisine: z.string(), // FIXME temporary change it to string, for test
   phoneNumber: z.string(),

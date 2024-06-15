@@ -1,5 +1,6 @@
 'use server';
 
+import BackButton from '@/components/BackButton/BackButton';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import MainSection from '@/components/MainSection/MainSection';
@@ -8,6 +9,7 @@ import RestPhotoCarousel from '@/components/RestPhotoCarousel/RestPhotoCarousel'
 import { atma } from '@/constants/fonts';
 import ApiService from '@/services/api';
 import {
+  ArrowLeftStartOnRectangleIcon,
   LinkIcon,
   MapPinIcon,
   PhoneIcon,
@@ -33,17 +35,23 @@ export default async function RestaurantPage({
     <>
       <Header />
 
-      <MainSection>
+      <MainSection mainBoxStyle="pt-5 md:pt-20">
         {restaurant ? (
           <div className="grid-rows-[minmax(350px, 1fr)_1fr]  grid h-full w-full grid-cols-8 gap-3 gap-y-5">
+            <BackButton className=" col-span-3 ml-5 hidden w-fit items-center gap-2 rounded-full border px-4 py-1 text-xl duration-150 hover:text-red-500 md:col-start-2 md:ml-0 md:flex md:text-base">
+              <ArrowLeftStartOnRectangleIcon className="h-6 w-6" /> Back
+            </BackButton>
+            {/* Photos Carousel */}
             <RestPhotoCarousel
-              className="col-span-6 col-start-2"
+              className="col-span-full md:col-span-6 md:col-start-2"
               restId={restaurantId}
             />
-            <div className="col-span-4 col-start-2 min-h-[350px] rounded-l-md bg-gradient-to-r from-red-500 p-[1px] pr-0">
-              <div className="h-full rounded-l-md bg-white p-5  ">
-                <div className="flex justify-between">
-                  <h2 className={clsx(atma.className, 'ml-2 text-3xl')}>
+
+            {/* Rest Description */}
+            <div className="col-span-full min-h-[350px] rounded-l-md p-[1px] pr-0 md:col-span-4 md:col-start-2 md:bg-gradient-to-r md:from-red-500">
+              <div className="h-full rounded-l-md bg-white md:p-5  ">
+                <div className="flex flex-col justify-between pl-2 md:flex-row">
+                  <h2 className={clsx(atma.className, ' text-3xl')}>
                     {restaurant.title}
                   </h2>
                   <RatingNumber
@@ -51,7 +59,7 @@ export default async function RestaurantPage({
                     className="text-lg"
                   />
                 </div>
-                <hr className="mb-4 mt-2 h-[1px] w-6/12 border-0 bg-gradient-to-r from-red-500 " />
+                <hr className="mb-4 mt-2 h-[1px] w-10/12 border-0 bg-gradient-to-r from-red-500 md:w-6/12 " />
                 <p className="mb-2 ml-4">
                   <span className=" mr-1 font-semibold ">
                     Cuisine{restaurant.cuisine.length > 1 ? 's' : ''}:
@@ -64,37 +72,50 @@ export default async function RestaurantPage({
               </div>
             </div>
 
-            <div className="col-span-2 rounded-r-md bg-gradient-to-l from-red-500 p-[1px]  pl-0">
-              <div className="h-full rounded-r-md bg-white p-5 pl-1">
-                <div className=" grid grid-cols-[24px_minmax(0,1fr)] gap-x-1 gap-y-5">
-                  <MapPinIcon className="inline h-6 w-6 text-zinc-500" />
-                  <RightSideListItem hoverUnderline={false}>
-                    {Object.values(restaurant.address).join(', ')}
-                  </RightSideListItem>
-                  {restaurant.website && (
-                    <>
-                      <LinkIcon className=" inline h-5 w-5  text-zinc-500 " />
-                      <RightSideListItem href={restaurant.website}>
-                        {restaurant.website}
-                      </RightSideListItem>
-                    </>
-                  )}
-                  <PhoneIcon className="inline h-5 w-5 text-zinc-500" />
-                  <RightSideListItem href={`tel:${restaurant.phoneNumber}`}>
+            {/* Additional information */}
+            <div className=" col-span-full h-full rounded-r-md p-[1px] pl-0 md:col-span-2 md:bg-gradient-to-l  md:from-red-500">
+              <h3 className="mb-3 block pl-4 text-xl md:hidden">
+                Additional information
+              </h3>
+              <div className="grid h-fit grid-cols-[24px_minmax(0,1fr)] gap-x-1 gap-y-5 rounded-r-md bg-white  md:h-full md:p-5 md:pl-1">
+                {/* Location */}
+                <MapPinIcon className="inline h-6 w-6 text-zinc-500" />
+                <RightSideListItem hoverUnderline={false}>
+                  {Object.values(restaurant.address).join(', ')}
+                </RightSideListItem>
+
+                {/* Website */}
+                {restaurant.website && (
+                  <>
+                    <LinkIcon className=" inline h-5 w-5  text-zinc-500 " />
+                    <RightSideListItem>
+                      <a href={restaurant.website} className="underline">
+                        Website
+                      </a>
+                    </RightSideListItem>
+                  </>
+                )}
+
+                {/* Phone */}
+                <PhoneIcon className="inline h-5 w-5 text-zinc-500" />
+                <RightSideListItem>
+                  <a href={`tel:${restaurant.phoneNumber}`}>
                     {restaurant.phoneNumber}
-                  </RightSideListItem>
-                  <PuzzlePieceIcon className="inline h-5 w-5 text-zinc-500" />
-                  <RightSideListItem hoverUnderline={false}>
-                    Joined on{' '}
-                    {restaurant.createdAt
-                      .split('T')
-                      .shift()
-                      ?.toString()
-                      .split('-')
-                      .reverse()
-                      .join('.')}
-                  </RightSideListItem>
-                </div>
+                  </a>
+                </RightSideListItem>
+
+                {/* Joined at */}
+                <PuzzlePieceIcon className="inline h-5 w-5 text-zinc-500" />
+                <RightSideListItem hoverUnderline={false}>
+                  Joined on{' '}
+                  {restaurant.createdAt
+                    .split('T')
+                    .shift()
+                    ?.toString()
+                    .split('-')
+                    .reverse()
+                    .join('.')}
+                </RightSideListItem>
               </div>
             </div>
           </div>
@@ -114,19 +135,14 @@ interface ListItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   hoverUnderline?: boolean;
 }
 
-function RightSideListItem({
-  href,
-  children,
-  hoverUnderline = true,
-}: ListItemProps) {
+function RightSideListItem({ children, hoverUnderline = true }: ListItemProps) {
   return (
-    <a
+    <div
       className={clsx('text-zinc-600 duration-200 hover:text-zinc-700 ', {
         'hover:underline': hoverUnderline,
       })}
-      href={href}
     >
       {children}
-    </a>
+    </div>
   );
 }

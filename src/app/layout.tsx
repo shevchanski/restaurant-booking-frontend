@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { jakarta } from '@/constants/fonts';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: 'TableBar',
   description: 'Find your restaurant in one touch',
   icons: '/favicon.ico',
+};
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({

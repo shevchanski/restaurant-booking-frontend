@@ -1,6 +1,6 @@
 'use client';
 
-import { FileUploadConfig } from '@/constants/config';
+import { BYTE_SIZE, FileUploadConfig } from '@/constants/config';
 import { RestaurantFormSchema } from '@/schemas/rest-registation.schema';
 import ApiService from '@/services/api';
 import { ActionResponse } from '@/types/global.type';
@@ -58,7 +58,7 @@ export default function RestaurantForm() {
       setSubmitResponse({ success: true, message: 'Successfully registered' });
     }
 
-    if (photos && regRes) {
+    if (photos?.length && regRes) {
       const promiseArray = photos.map((photo) => {
         const formData = new FormData();
         formData.append('restaurant_photo', photo);
@@ -121,7 +121,7 @@ export default function RestaurantForm() {
         <Input
           labelText="Cuisine (comma separated)"
           {...register('cuisine')}
-          className="col-span-2"
+          className="col-span-full md:col-span-2"
           required
           placeholder="Select cuisine(s)"
           validErrors={errors}
@@ -132,10 +132,12 @@ export default function RestaurantForm() {
           labelText="Phone Number"
           {...register('phoneNumber')}
           type="tel"
-          className="col-span-2"
+          className="col-span-full md:col-span-2"
           required
+          mask="phone"
           inputIcon={<PhoneIcon />}
           validErrors={errors}
+          placeholder="+380 (89) 999-99-99"
         />
 
         {/* Address Section */}
@@ -183,15 +185,15 @@ export default function RestaurantForm() {
 
         {/* Input to upload photos */}
         <Input
-          labelText="Restaurant's photos"
+          labelText={`Restaurant's photos (max: ${
+            FileUploadConfig.MAX_FILE_SIZE / BYTE_SIZE / BYTE_SIZE
+          }MB per file)`}
           type="file"
           className="col-span-full"
           multiple
           {...register('photos')}
-          //  aria-invalid={!fileInputState.isReady}
           accept={FileUploadConfig.FILE_TYPES.join(',')}
           size={FileUploadConfig.MAX_FILE_SIZE}
-          //  errorMessage={fileInputState.message}
           validErrors={errors}
         />
       </div>
