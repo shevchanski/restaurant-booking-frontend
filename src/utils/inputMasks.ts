@@ -7,10 +7,10 @@ function maskPhone(value: string) {
   console.log(value);
   value = value
     .replace(/\D/g, '')
-    .replace(/^(\d{1,3})/, '+($1')
-    .replace(/^(.{5})(\d{1,2})/, '$1) $2')
-    .replace(/^(.{6})\ (\d{2})(\d{1,3})/, '$1 $2 $3')
-    .replace(/^(.{6})\ (\d{2})\ (\d{3})(\d{1,4})/, '$1 $2 $3-$4');
+    .replace(/^(\d{1,3})/, '+$1')
+    .replace(/^(.{4})(\d{1,2})/, '$1 ($2')
+    .replace(/^(.{4})\ (\(\d{2})(\d{1,3})/, '$1 $2) $3')
+    .replace(/^(.{4})\ (\(\d{2}\))\ (\d{3})(\d{1,4})/, '$1 $2 $3-$4');
 
   return cutNumber(value);
 }

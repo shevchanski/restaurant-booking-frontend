@@ -137,7 +137,7 @@ export default function RestaurantForm() {
           mask="phone"
           inputIcon={<PhoneIcon />}
           validErrors={errors}
-          placeholder="+380 (89) 999-99-99"
+          placeholder="+380 (89) 999-9999"
         />
 
         {/* Address Section */}
