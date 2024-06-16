@@ -16,9 +16,7 @@ export default function MainSection({
     <main
       className={clsx(mainBoxStyle, ' w-full flex-1 py-10 text-black md:py-20')}
     >
-      <Wrapper>
-        <div className={innerBoxStyle}>{children}</div>
-      </Wrapper>
+      <Wrapper className={innerBoxStyle}>{children}</Wrapper>
     </main>
   );
 }
