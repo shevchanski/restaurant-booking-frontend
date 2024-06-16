@@ -8,8 +8,8 @@ type Props = {
 export default function AuthLayout({ children }: Props) {
   return (
     <MainSection
-      mainBoxStyle="h-scree w-full bg-[url('/img/mainPage-bg.jpg')] bg-cover bg-no-repeat min-h-fit"
-      innerBoxStyle="flex flex-col justify-center items-center h-screen min-h-fit"
+      mainBoxStyle="h-screen w-full bg-[url('/img/mainPage-bg.jpg')] bg-cover bg-no-repeat flex  justify-center items-center"
+      innerBoxStyle=" flex flex-col items-center h-max min-h-fit"
     >
       {children}
       <a
