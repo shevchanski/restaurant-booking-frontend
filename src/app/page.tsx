@@ -9,7 +9,7 @@ import TopRated from '@/layouts/TopRated/TopRatedRestaurants';
 export default async function Home() {
   return (
     <>
-      <div className=" h-[650px] w-full bg-[url('/img/mainPage-bg.jpg')] bg-cover bg-center bg-no-repeat md:h-[850px]">
+      <div className=" h-[650px] w-full bg-[url('/img/mainPage-bg-min.jpg')] bg-cover bg-center bg-no-repeat md:h-[850px]">
         <Header />
         <Wrapper>
           <div className="mt-[100px] flex flex-col items-center">

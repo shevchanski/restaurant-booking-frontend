@@ -17,7 +17,7 @@ interface Props {
 export default async function SearchResultPage({ searchParams }: Props) {
   return (
     <>
-      <div className=" box-border w-full border border-transparent bg-[url('/img/mainPage-bg.jpg')] bg-cover">
+      <div className=" box-border w-full border border-transparent bg-[url('/img/mainPage-bg-min.jpg')] bg-cover">
         <Header />
         <Wrapper>
           <div className="my-[60px] flex justify-center">
