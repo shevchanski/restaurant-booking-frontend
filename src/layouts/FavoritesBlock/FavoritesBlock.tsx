@@ -1,0 +1,61 @@
+'use client';
+
+import ApiService from '@/services/api';
+import { IRestaurant } from '@/types/restaurant.type';
+import getRestaurantsIds from '@/utils/getRestaurantsIds';
+import { isRestaurantsArray } from '@/utils/isRestaurantsArray';
+import { useAuth } from '@clerk/nextjs';
+import { useEffect, useState } from 'react';
+import Attention from '../../components/Attention/Attention';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import CardsGrid from '../CardsGrid/CardsGrid';
+
+export default function FavoritesBlock() {
+  const [isLoading, setLoading] = useState<boolean>(true);
+  const [favorites, setFavorites] = useState<IRestaurant[]>([]);
+  const [favoritesIds, setFavoritesIds] = useState<string[]>([]);
+  const { userId } = useAuth();
+
+  useEffect(() => {
+    const getFavorites = async (userId: string) => {
+      setLoading(true);
+
+      const response = await ApiService.getUserFavorites(userId, false);
+
+      if (isRestaurantsArray(response)) {
+        setFavorites(response);
+        setFavoritesIds(getRestaurantsIds(response));
+      }
+
+      setLoading(false);
+    };
+
+    if (userId) {
+      getFavorites(userId);
+    }
+  }, [userId]);
+
+  return (
+    <>
+      {userId ? (
+        <>
+          {isLoading ? (
+            <LoadingSpinner className="mt-10" />
+          ) : favorites.length ? (
+            <CardsGrid
+              restaurants={favorites as IRestaurant[]}
+              favorites={favoritesIds}
+            />
+          ) : (
+            <h2> At first add to favorites any restaurant</h2>
+          )}
+        </>
+      ) : (
+        <Attention>
+          List of favoured restaurants cannot be loaded if user is not signed
+          in!{' '}
+        </Attention>
+      )}
+    </>
+  );
+}
